@@ -1,22 +1,25 @@
 # 🎯 5-Minute AI Agent Bootcamp Demo Script
 
-![Version](https://img.shields.io/badge/Version-2.2.0-blue)
-![Demo](https://img.shields.io/badge/Demo-5%20Minutes-red)
-![Status](https://img.shields.io/badge/Status-Ready-brightgreen)
+![Version](https://img.shields.io/badge/Version-2.4.0-blue)
+![Demo](https://img.shields.io/badge/Demo-6%20Minutes-red)
+![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
+![APIs](https://img.shields.io/badge/APIs-Hybrid%20System-purple)
 
 ## Demo Setup (30 seconds)
-- **App URL:** `http://localhost:8545`
+- **App URL:** `http://localhost:8552`
 - **Browser:** Fresh incognito window for clean demo
 - **Backup Questions:** Have 2-3 questions ready in case of issues
+- **API Mode:** Toggle between Mock (demo-safe) and Real APIs
+- **Search Tools:** Both Document Search (Pinecone) and Web Search available
 
 ---
 
-## 🚀 Demo Flow (4.5 minutes)
+## 🚀 Demo Flow (5.5 minutes)
 
 ### **Opening Hook (30 seconds)**
-> "I built a Context-Aware Research Assistant for Week 2 of the AI Agent Bootcamp. This transforms a simple task breakdown tool into a sophisticated conversational AI with real-time thinking processes and multi-model capabilities."
+> "I built a Context-Aware Research Assistant with Hybrid API Integration for Week 2 of the AI Agent Bootcamp. This transforms a simple task breakdown tool into a production-ready conversational AI with document search, web search, real-time thinking, and intelligent API management."
 
-**Show:** App homepage with clean interface
+**Show:** App homepage with clean interface and hybrid system toggle
 
 ### **Core Feature 1: Real-Time Chain of Thought (90 seconds)**
 
@@ -44,84 +47,124 @@
 
 **EXPECTED:** Quick, reliable response demonstrating model switching
 
-### **Core Feature 3: Conversational Memory & Tools (60 seconds)**
+### **Core Feature 3: Document Search with Pinecone (90 seconds)**
 
 **SAY:**
-> "Full conversational context with intelligent search tool integration."
+> "Built-in document search powered by Pinecone vector database with real company documents."
 
 **DO:**
-1. Ask: **"What did we just discuss about Ferrari?"**
-2. **Highlight:** "Perfect memory of our conversation"
-3. **Show:** Document Search and Web Search toggles in sidebar
-4. **Explain:** "Can search private documents and web simultaneously"
+1. **Show:** Document Search toggle enabled in sidebar
+2. Ask: **"What is the vacation policy for new employees?"**
+3. **Point out:** "Watch it search through uploaded company documents"
+4. **Highlight:** "See the confidence scores and exact document matches"
+5. **Explain:** "This is real vector search - not mock data"
 
-**EXPECTED:** Contextual response referencing previous Ferrari discussion
+**EXPECTED:** Detailed vacation policy response with document source citations
 
-### **Error Handling & Reliability Demo (30 seconds)**
+### **Core Feature 4: Web Search Integration (60 seconds)**
 
 **SAY:**
-> "Built production-ready error handling with plain English explanations."
+> "Hybrid API system - toggle between mock (demo-safe) and real Google search."
 
 **DO:**
-1. **Show:** Usage stats expander from previous responses
-2. **Point out:** Token usage tracking, model information
-3. **Explain:** "If anything goes wrong, users get clear explanations, not technical errors"
+1. **Show:** Web Search toggle and API mode selector
+2. **Switch to Real APIs** (if internet available)
+3. Ask: **"What are the latest Tesla Model 3 updates for 2025?"**
+4. **Point out:** "Live internet search with current information"
+5. **Show:** Fallback to mock mode for reliability
+
+**EXPECTED:** Current Tesla information with web source citations
+
+### **Core Feature 5: Conversational Memory (30 seconds)**
+
+**SAY:**
+> "Perfect conversation context - remembers everything we discussed."
+
+**DO:**
+1. Ask: **"What documents did we just search and what did we find?"**
+2. **Highlight:** "Complete memory of document searches, web searches, and responses"
+
+**EXPECTED:** Contextual summary of all previous searches and findings
+
+### **Hybrid System & Reliability Demo (30 seconds)**
+
+**SAY:**
+> "Production-ready hybrid system with intelligent fallbacks and comprehensive error handling."
+
+**DO:**
+1. **Show:** API mode toggle (Mock vs Real)
+2. **Demonstrate:** Switch between modes seamlessly
+3. **Point out:** Usage stats with token tracking
+4. **Explain:** "Mock mode for demos, real APIs for production - with graceful fallbacks"
 
 ### **Technical Architecture Highlight (30 seconds)**
 
 **SAY:**
-> "This demonstrates advanced AI engineering: function calling, tool integration, adaptive system prompts, and sophisticated fallback mechanisms - all wrapped in a Claude.ai-inspired interface."
+> "This demonstrates enterprise-grade AI engineering: Pinecone vector database, Google Custom Search API, hybrid API management, aggressive system prompts, and production-ready error handling - all in a Claude.ai-inspired interface."
 
 **DO:**
-1. **Show:** Clean, professional UI
-2. **Point out:** Chat history, persistent sidebar controls
-3. **Mention:** "Built with Streamlit, OpenAI APIs, comprehensive documentation"
+1. **Show:** Clean, professional UI with real-time thinking
+2. **Point out:** Document search results, web search citations
+3. **Mention:** "6 company documents indexed, verified search accuracy, production deployment ready"
 
 ---
 
 ## 🎯 Closing Impact Statement (30 seconds)
 
 **SAY:**
-> "In one week, I transformed a basic task generator into a production-ready research assistant that rivals professional AI tools. This showcases real-world AI engineering: handling model limitations, creating transparent user experiences, and building robust systems that work reliably."
+> "In one week, I evolved a basic task generator into an enterprise-grade research assistant with vector database integration, hybrid API management, and production-ready reliability. This demonstrates real-world AI engineering: from proof-of-concept to deployment-ready system with comprehensive documentation and professional architecture."
 
 **FINAL DEMO:**
-Ask audience for a question and demonstrate live, showing the full thinking process.
+Ask audience for a question that could use either document search OR web search, and demonstrate live with full thinking transparency.
 
 ---
 
 ## 🛟 Backup Questions (If Needed)
-1. **"Tell me about Tesla's current vehicle lineup"**
-2. **"What are the main differences between SUVs and crossovers?"**
-3. **"Explain the benefits of electric vehicles"**
-4. **"What should I know about hybrid cars?"**
+
+### Document Search Questions:
+1. **"What is the vacation policy for new employees?"**
+2. **"What are the company's remote work guidelines?"**
+3. **"Tell me about employee benefits and policies"**
+
+### Web Search Questions:
+1. **"What are the latest Tesla Model 3 updates for 2025?"**
+2. **"Current Ferrari models available for purchase"**
+3. **"Differences between hybrid and electric vehicles"**
+
+### Memory/Context Questions:
+4. **"What documents have we searched so far?"**
+5. **"Summarize our conversation about [previous topic]"**
 
 ---
 
 ## 📋 Key Points to Emphasize
 
-### **Technical Sophistication**
-- Multi-model architecture with intelligent fallback
-- Real-time chain of thought display
-- Function calling and tool integration
-- Comprehensive error handling
+### **Enterprise Architecture**
+- Pinecone vector database integration (6 documents indexed)
+- Google Custom Search API with hybrid fallback system
+- Multi-model architecture (GPT-4o default, GPT-5 experimental)
+- Aggressive system prompts forcing tool usage
+- Real-time chain of thought transparency
+
+### **Production Features**
+- Hybrid API system (Mock/Real toggle for demos)
+- Document search with confidence scoring
+- Web search with source citations
+- Comprehensive error handling and fallbacks
+- Professional documentation suite with versioning
 
 ### **User Experience Excellence**
-- Transparent AI reasoning process
-- Professional Claude.ai-inspired interface
-- Conversational memory and context
-- Always-visible loading feedback
-
-### **Production Readiness**
-- Robust error recovery systems
-- Plain English error explanations
-- Complete documentation suite
-- Git history with professional commits
+- Claude.ai-inspired conversational interface
+- Always-visible loading indicators
+- Real-time thinking process display
+- Seamless conversation memory
+- Professional project organization
 
 ### **Bootcamp Achievement**
-- Week 1 → Week 2 evolution
-- Advanced AI agent concepts
-- Real-world engineering practices
-- Professional-grade implementation
+- Week 1 task generator → Week 2 enterprise research assistant
+- Advanced vector search and API integration
+- Production deployment readiness
+- Comprehensive testing and documentation
 
 ---
 
