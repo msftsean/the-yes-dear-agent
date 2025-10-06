@@ -327,7 +327,7 @@ CONSTRAINTS: Never fabricate information - if you don't know, say so. Acknowledg
                             assistant_message = message.content
                         
                         # Display response
-                        if assistant_message:
+                        if assistant_message and assistant_message.strip():
                             st.markdown(assistant_message)
                             
                             # Add assistant response to chat history
@@ -344,7 +344,15 @@ CONSTRAINTS: Never fabricate information - if you don't know, say so. Acknowledg
                                     st.write(f"**Completion tokens:** {response.usage.completion_tokens}")
                                     st.write(f"**Total tokens:** {response.usage.total_tokens}")
                         else:
+                            # Debug information
                             st.error("❌ No response generated. Please try again.")
+                            st.write("**Debug Info:**")
+                            st.write(f"- Model: {selected_model}")
+                            st.write(f"- Message content: {repr(message.content) if hasattr(message, 'content') else 'No content'}")
+                            st.write(f"- Tool calls: {bool(getattr(message, 'tool_calls', None))}")
+                            st.write(f"- Assistant message: {repr(assistant_message)}")
+                            if hasattr(response, 'usage'):
+                                st.write(f"- Tokens used: {response.usage.total_tokens}")
                         
                     except Exception as e:
                         error_message = f"❌ Error: {str(e)}"
