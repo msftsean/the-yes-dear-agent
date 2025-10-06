@@ -198,18 +198,31 @@ try:
 
             # Generate assistant response
             with st.chat_message("assistant"):
+                # Create placeholder for chain of thought (stays visible)
+                thinking_placeholder = st.empty()
+                
                 # Create placeholder for loading message that will be replaced
                 response_placeholder = st.empty()
                 
                 with response_placeholder:
                     st.markdown("🔍 **Processing your request...** Please wait while I research your question.")
                 
+                # Show initial thinking process immediately
+                with thinking_placeholder:
+                    with st.expander("🤔 Agent Thinking Process", expanded=True):
+                        thinking_steps = st.empty()
+                        thinking_steps.markdown("🤔 **Starting analysis of your question...**")
+                
                 with st.spinner("Researching your question..."):
                     try:
+                        # Update thinking process
+                        thinking_steps.markdown("🤔 **Starting analysis...**\n\n🔍 **Preparing search tools...**")
+                        
                         # Prepare tools based on user selection
                         tools = []
                         
                         if use_doc_search:
+                            thinking_steps.markdown("🤔 **Starting analysis...**\n\n🔍 **Preparing search tools...**\n\n📁 **Document search enabled**")
                             tools.append({
                                 "type": "function",
                                 "function": {
@@ -229,6 +242,10 @@ try:
                             })
                         
                         if use_web_search:
+                            if use_doc_search:
+                                thinking_steps.markdown("🤔 **Starting analysis...**\n\n🔍 **Preparing search tools...**\n\n📁 **Document search enabled**\n\n🌐 **Web search enabled**")
+                            else:
+                                thinking_steps.markdown("🤔 **Starting analysis...**\n\n🔍 **Preparing search tools...**\n\n🌐 **Web search enabled**")
                             tools.append({
                                 "type": "function",
                                 "function": {
@@ -289,19 +306,61 @@ CONSTRAINTS: If you're not certain about something, acknowledge the uncertainty.
                         if tools:
                             api_params["tools"] = tools
 
+                        # Update thinking - making API call
+                        tool_text = "\n\n📁 **Document search enabled**" if use_doc_search else ""
+                        tool_text += "\n\n🌐 **Web search enabled**" if use_web_search else ""
+                        thinking_steps.markdown(f"🤔 **Starting analysis...**\n\n🔍 **Preparing search tools...**{tool_text}\n\n🤖 **Connecting to AI model ({selected_model})...**")
+                        
                         # Make API call
                         response = client.chat.completions.create(**api_params)
+                        
+                        # Update thinking - analyzing response
+                        thinking_steps.markdown(f"🤔 **Starting analysis...**\n\n🔍 **Preparing search tools...**{tool_text}\n\n🤖 **Connected to {selected_model}**\n\n💭 **Analyzing your question...**")
                         
                         # Check if the model wants to call functions
                         message = response.choices[0].message
                         
+                        # Always check for chain of thought content first
+                        chain_of_thought = getattr(message, 'content', None)
+                        is_thinking = False
+                        
+                        # Detect if this is thinking/reasoning vs final answer
+                        if chain_of_thought and chain_of_thought.strip():
+                            thinking_indicators = [
+                                "i'm going to", "let me", "searching", "i'll", "checking", 
+                                "looking up", "fetching", "accessing", "querying", "attempting",
+                                "initiating", "performing", "calling", "using", "proceeding"
+                            ]
+                            is_thinking = any(indicator in chain_of_thought.lower() for indicator in thinking_indicators)
+                            
+                            # Also check length - very long responses are usually thinking
+                            if len(chain_of_thought) > 800:
+                                is_thinking = True
+                        
+                        # Initialize thinking display
+                        thinking_content = []
+                        
+                        # Capture initial reasoning if present
+                        if chain_of_thought and chain_of_thought.strip():
+                            thinking_content.append(f"**Initial reasoning:**\n{chain_of_thought}")
+                        
                         if message.tool_calls:
+                            
                             # Handle function calls
                             messages_for_api.append(message)
                             
-                            for tool_call in message.tool_calls:
+                            # Show real-time tool execution
+                            for i, tool_call in enumerate(message.tool_calls):
                                 function_name = tool_call.function.name
                                 function_args = json.loads(tool_call.function.arguments)
+                                
+                                # Update thinking display in real-time
+                                query = function_args.get('query', 'N/A')
+                                tool_icon = "📁" if function_name == "search_documents" else "🌐"
+                                thinking_steps.markdown(f"🤔 **Starting analysis...**\n\n🔍 **Search tools prepared**{tool_text}\n\n🤖 **Connected to {selected_model}**\n\n💭 **Question analyzed**\n\n{tool_icon} **Executing {function_name}**\n\n🔎 Query: \"*{query}*\"")
+                                
+                                # Add tool activity to thinking content for later display
+                                thinking_content.append(f"**Tool {i+1}: {function_name}**\nQuery: {query}")
                                 
                                 # Execute the function
                                 if function_name == "search_documents":
@@ -327,6 +386,9 @@ CONSTRAINTS: If you're not certain about something, acknowledge the uncertainty.
                                     "content": function_result
                                 })
                             
+                            # Update thinking - synthesizing response
+                            thinking_steps.markdown(f"🤔 **Starting analysis...**\n\n🔍 **Search completed**{tool_text}\n\n🤖 **Connected to {selected_model}**\n\n💭 **Question analyzed**\n\n✅ **Search results obtained**\n\n🧠 **Synthesizing final response...**")
+                            
                             # Make second API call to get final response
                             second_api_params = {
                                 "model": selected_model,
@@ -341,9 +403,86 @@ CONSTRAINTS: If you're not certain about something, acknowledge the uncertainty.
                             second_response = client.chat.completions.create(**second_api_params)
                             
                             assistant_message = second_response.choices[0].message.content
+                            
+                            # Capture any reasoning from the second response for thinking display
+                            second_message_content = getattr(second_response.choices[0].message, 'content', '')
+                            if second_message_content and len(second_message_content) > 200:
+                                # Check if this looks like thinking
+                                thinking_indicators = ["i'm going to", "let me", "searching", "i'll", "checking", "looking up"]
+                                if any(indicator in second_message_content.lower() for indicator in thinking_indicators):
+                                    thinking_content.append(f"**Agent reasoning:**\n{second_message_content}")
+                            
+                            # Finalize thinking display - mark as complete
+                            thinking_steps.markdown(f"🤔 **Analysis Complete!**\n\n🔍 **Search completed**{tool_text}\n\n🤖 **Used {selected_model}**\n\n💭 **Question analyzed**\n\n✅ **Search results obtained**\n\n🧠 **Response synthesized**\n\n✨ **Ready to respond!**")
+                            
+                            # GPT-5 tool response fallback - if content is empty after tool calls, try GPT-4o
+                            if (not assistant_message or assistant_message.strip() == "") and selected_model == "gpt-5":
+                                # Create simplified messages for GPT-4o including tool results
+                                fallback_messages = [
+                                    {"role": "system", "content": "You are a helpful research assistant. Based on the search results provided, give a comprehensive answer to the user's question. Cite your sources and provide clear, well-formatted information."},
+                                    {"role": "user", "content": st.session_state.messages[-1]["content"]}
+                                ]
+                                
+                                # Add tool results as context for GPT-4o
+                                tool_context = []
+                                for msg in messages_for_api:
+                                    # Handle both dict messages and ChatCompletionMessage objects
+                                    role = msg.get("role") if isinstance(msg, dict) else getattr(msg, "role", None)
+                                    if role == "tool":
+                                        content = msg.get("content") if isinstance(msg, dict) else getattr(msg, "content", "")
+                                        tool_context.append(f"Search Results: {content}")
+                                
+                                if tool_context:
+                                    fallback_messages.append({
+                                        "role": "user", 
+                                        "content": f"Based on these search results:\n\n{chr(10).join(tool_context)}\n\nPlease provide a comprehensive answer to my question."
+                                    })
+                                
+                                fallback_response = client.chat.completions.create(
+                                    model="gpt-4o",
+                                    messages=fallback_messages,
+                                    max_completion_tokens=1500,
+                                    temperature=0.7
+                                )
+                                
+                                assistant_message = fallback_response.choices[0].message.content
+                                if assistant_message:
+                                    assistant_message = f"*[Response generated using GPT-4o due to GPT-5 tool response issue]*\n\n{assistant_message}"
+                                else:
+                                    # Final fallback - create response from tool results
+                                    if tool_context:
+                                        assistant_message = f"Based on my search, here's what I found:\n\n{chr(10).join(tool_context)}\n\n*Note: This is a summary of search results. For more detailed information, please try asking a more specific question.*"
+                                    else:
+                                        assistant_message = "I searched for information but encountered an issue generating the response. Please try rephrasing your question or switch to GPT-4o model."
+                            
+                            # Show error in thinking display
+                            if not assistant_message and (use_doc_search or use_web_search):
+                                thinking_steps.markdown(f"🤔 **Analysis Issues**\n\n🔍 **Search tools prepared**{tool_text}\n\n⚠️ **Model compatibility issue detected**\n\n🔄 **Attempting recovery...**")
+                                assistant_message = "I attempted to search for information about your question, but encountered an issue. Please try switching to the GPT-4o model or rephrase your question."
                         else:
                             # Extract content from message
                             assistant_message = getattr(message, 'content', None)
+                            
+                            # If this looks like thinking, show it in the live display
+                            if is_thinking and assistant_message:
+                                thinking_steps.markdown(f"🤔 **Agent's Reasoning:**\n\n{assistant_message}")
+                                
+                                # Generate a proper response since this was just thinking
+                                try:
+                                    proper_response = client.chat.completions.create(
+                                        model="gpt-4o",  # Use GPT-4o for reliable responses
+                                        messages=[
+                                            {"role": "system", "content": "You are a helpful assistant. Provide a clear, direct answer to the user's question. Be concise and informative."},
+                                            {"role": "user", "content": st.session_state.messages[-1]["content"]}
+                                        ],
+                                        max_completion_tokens=800,
+                                        temperature=0.7
+                                    )
+                                    assistant_message = proper_response.choices[0].message.content
+                                    if assistant_message:
+                                        assistant_message = f"*[Thinking process shown above, response generated using GPT-4o]*\n\n{assistant_message}"
+                                except:
+                                    assistant_message = "I've been thinking about your question (see above), but I'm having trouble generating a proper response. Please try rephrasing your question."
                             
                             # GPT-5 fallback - if content is empty, try a simplified prompt
                             if not assistant_message and selected_model == "gpt-5":
@@ -410,10 +549,29 @@ CONSTRAINTS: If you're not certain about something, acknowledge the uncertainty.
                                 st.info("The response appears to be empty for an unknown reason. Try switching models or clearing your chat history.")
                         
                     except Exception as e:
+                        # Update thinking display with error
+                        thinking_steps.markdown(f"🤔 **Analysis Interrupted**\n\n❌ **Error encountered:** {str(e)}\n\n🔄 **Please try again**")
+                        
                         # Clear loading message and show error
                         response_placeholder.empty()
                         error_message = f"❌ Error: {str(e)}"
                         st.error(error_message)
+                        
+                        # Simple error analysis
+                        st.markdown("---")
+                        st.write("**🔍 What This Means:**")
+                        
+                        error_str = str(e).lower()
+                        if "api key" in error_str or "unauthorized" in error_str:
+                            st.warning("There's an issue with your OpenAI API key. Please check that it's set correctly in your environment variables.")
+                        elif "rate limit" in error_str or "quota" in error_str:
+                            st.warning("You've hit the API rate limit or quota. Please wait a moment and try again, or check your OpenAI account usage.")
+                        elif "network" in error_str or "connection" in error_str or "timeout" in error_str:
+                            st.warning("There's a network connectivity issue. Please check your internet connection and try again.")
+                        elif "chatcompletionmessage" in error_str or "attribute" in error_str:
+                            st.warning("There's a compatibility issue with the AI model response format. Try switching to GPT-4o or refresh the page.")
+                        else:
+                            st.info("An unexpected error occurred. Try refreshing the page, switching models, or clearing your chat history.")
                         
                         # Add error to chat history
                         st.session_state.messages.append({

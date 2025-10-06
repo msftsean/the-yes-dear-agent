@@ -222,7 +222,17 @@ streamlit run app.py --server.runOnSave true
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📝 License
+## � Documentation
+
+### 📋 Project Documentation
+- **[Release Notes](assets/docs/RELEASE_NOTES.md)** - Complete version history, bootcamp progress, and feature evolution
+- **[Week 2 Demo Guide](assets/docs/WEEK2_DEMO_GUIDE.md)** - Strategic demonstration framework with testing protocols
+- **[Model Comparison Test](assets/docs/MODEL_COMPARISON_TEST.md)** - Comprehensive GPT-5 vs GPT-4o testing framework
+
+### 🎪 Demo Materials
+- **[Demo Setup Guide](DEMOS.md)** - Complete guide for presenting your research assistant with scripts and timing
+
+## �📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
@@ -234,18 +244,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## � Version History
 
-See [RELEASE_NOTES.md](RELEASE_NOTES.md) for detailed version history, bootcamp progress, and feature evolution.
+See [Release Notes](assets/docs/RELEASE_NOTES.md) for detailed version history, bootcamp progress, and feature evolution.
 
-**Current Version**: 2.1.0 - "The 'Yes Dear' Assistant"  
+**Current Version**: 2.2.0 - "Context-Aware Research Assistant"  
 **Bootcamp Status**: Week 2 Complete ✅
 
-## �📞 Support
+##  Support
 
 If you encounter any issues or have questions:
 1. Check the troubleshooting section above
-2. Review the [TEST_SCRIPT.md](TEST_SCRIPT.md) for comprehensive testing scenarios
-3. Check [RELEASE_NOTES.md](RELEASE_NOTES.md) for version-specific information
-4. Review archived files for development examples
+2. Review the [Week 2 Demo Guide](assets/docs/WEEK2_DEMO_GUIDE.md) for comprehensive testing scenarios
+3. Check [Release Notes](assets/docs/RELEASE_NOTES.md) for version-specific information
+4. Review [Model Comparison Test](assets/docs/MODEL_COMPARISON_TEST.md) for advanced testing
 5. Open an issue on GitHub
 
 ---
