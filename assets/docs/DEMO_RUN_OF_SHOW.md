@@ -1,5 +1,9 @@
 # 🎬 Demo Run of Show - 5 Minutes
 
+![Version](https://img.shields.io/badge/Version-2.2.0-blue)
+![Timeline](https://img.shields.io/badge/Timeline-5%20Minutes-orange)
+![Production](https://img.shields.io/badge/Production-Ready-brightgreen)
+
 ## ⏱️ Timing Breakdown
 ```
 00:00 - 00:30  |  Opening & Setup

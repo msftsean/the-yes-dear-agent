@@ -1,5 +1,9 @@
 # 🧪 Model Comparison Test Script - GPT-5 vs GPT-4o
 
+![Version](https://img.shields.io/badge/Version-2.2.0-blue)
+![Models](https://img.shields.io/badge/Models-GPT--5%20vs%20GPT--4o-purple)
+![Testing](https://img.shields.io/badge/Testing-Comprehensive-orange)
+
 ## 🎯 Testing Objective
 Compare performance, capabilities, and response quality between GPT-5 (latest) and GPT-4o models in "The 'Yes Dear' Assistant".
 

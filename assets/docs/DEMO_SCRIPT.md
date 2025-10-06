@@ -1,5 +1,9 @@
 # 🎯 5-Minute AI Agent Bootcamp Demo Script
 
+![Version](https://img.shields.io/badge/Version-2.2.0-blue)
+![Demo](https://img.shields.io/badge/Demo-5%20Minutes-red)
+![Status](https://img.shields.io/badge/Status-Ready-brightgreen)
+
 ## Demo Setup (30 seconds)
 - **App URL:** `http://localhost:8545`
 - **Browser:** Fresh incognito window for clean demo

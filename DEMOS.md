@@ -1,5 +1,9 @@
 # 📚 Demo Materials
 
+![Version](https://img.shields.io/badge/Version-2.2.0-blue)
+![Status](https://img.shields.io/badge/Status-Demo%20Ready-brightgreen)
+![Updated](https://img.shields.io/badge/Updated-Oct%202025-orange)
+
 This folder contains comprehensive demo materials for presenting your Context-Aware Research Assistant.
 
 ## 🎯 Demo Files

@@ -593,7 +593,7 @@ CONSTRAINTS: If you're not certain about something, acknowledge the uncertainty.
         st.info("This is The 'Yes Dear' Assistant built for Week 2 of the AI Agent Bootcamp - your helpful companion for tackling that honeydew list!")
         
         # Show couple image in sidebar
-        st.image("couple.png", caption="The 'Yes Dear' Assistant")
+        st.image("assets/images/couple.png", caption="The 'Yes Dear' Assistant")
         
         st.markdown("---")
         st.markdown("**Built with:**")

@@ -1,5 +1,9 @@
 # 🎯 Week 2 Feature Demonstration Guide
 
+![Version](https://img.shields.io/badge/Version-2.2.0-blue)
+![Bootcamp](https://img.shields.io/badge/Bootcamp-Week%202-success)
+![Tests](https://img.shields.io/badge/Tests-Comprehensive-orange)
+
 This guide provides three carefully crafted prompts to showcase all the advanced features of "The 'Yes Dear' Assistant" - your Context-Aware Research Assistant.
 
 ## 🏆 **Overview of Week 2 Features**
