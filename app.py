@@ -365,6 +365,23 @@ CONSTRAINTS: If you're not certain about something, acknowledge the uncertainty.
                             st.write(f"- Assistant message: {repr(assistant_message)}")
                             if hasattr(response, 'usage'):
                                 st.write(f"- Tokens used: {response.usage.total_tokens}")
+                            
+                            # Plain English analysis
+                            st.markdown("---")
+                            st.write("**🔍 What This Means:**")
+                            
+                            tokens_used = response.usage.total_tokens if hasattr(response, 'usage') else 0
+                            has_tools = bool(getattr(message, 'tool_calls', None))
+                            has_content = bool(message.content if hasattr(message, 'content') else False)
+                            
+                            if tokens_used > 0 and not has_content and not has_tools:
+                                st.warning("The AI model processed your question (used tokens) but returned an empty response. This usually means there's a problem with the system prompt or model configuration.")
+                            elif has_tools and not has_content:
+                                st.info("The model tried to use search tools but didn't provide a final response. This might be a tool integration issue.")
+                            elif tokens_used == 0:
+                                st.error("No tokens were used, which means the API call failed completely. Check your internet connection and API key.")
+                            else:
+                                st.info("The response appears to be empty for an unknown reason. Try switching models or clearing your chat history.")
                         
                     except Exception as e:
                         error_message = f"❌ Error: {str(e)}"
