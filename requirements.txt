@@ -1,0 +1,6 @@
+# Core dependencies for Yes Dear Agent
+streamlit==1.50.0
+openai==1.109.1
+python-dotenv==1.1.1
+
+# Note: Other packages will be installed automatically as dependencies

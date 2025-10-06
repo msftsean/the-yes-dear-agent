@@ -66,7 +66,7 @@ with col2:
     st.markdown("<p style='text-align: center;'>Let AI break down your honeydew list!</p>", unsafe_allow_html=True)
     
     # Add couple image
-    st.image("couple.png", use_container_width=True, caption="")
+    st.image("couple.png", width="stretch", caption="")
 
     # Check if API key is available
     if not OPENAI_API_KEY:
