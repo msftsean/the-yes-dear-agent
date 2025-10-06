@@ -336,7 +336,26 @@ CONSTRAINTS: If you're not certain about something, acknowledge the uncertainty.
                             
                             assistant_message = second_response.choices[0].message.content
                         else:
-                            assistant_message = message.content
+                            # Extract content from message
+                            assistant_message = getattr(message, 'content', None)
+                            
+                            # GPT-5 fallback - if content is empty, try a simplified prompt
+                            if not assistant_message and selected_model == "gpt-5":
+                                fallback_messages = [
+                                    {"role": "system", "content": "You are a helpful assistant. Provide a clear and informative response."},
+                                    {"role": "user", "content": st.session_state.messages[-1]["content"]}
+                                ]
+                                
+                                fallback_response = client.chat.completions.create(
+                                    model="gpt-4o",  # Use GPT-4o as fallback
+                                    messages=fallback_messages,
+                                    max_completion_tokens=1500,
+                                    temperature=0.7
+                                )
+                                
+                                assistant_message = fallback_response.choices[0].message.content
+                                if assistant_message:
+                                    assistant_message = f"*[Answered using GPT-4o fallback due to GPT-5 response issue]*\n\n{assistant_message}"
                         
                         # Display response
                         if assistant_message and assistant_message.strip():
