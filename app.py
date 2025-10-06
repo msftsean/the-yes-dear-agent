@@ -198,6 +198,12 @@ try:
 
             # Generate assistant response
             with st.chat_message("assistant"):
+                # Create placeholder for loading message that will be replaced
+                response_placeholder = st.empty()
+                
+                with response_placeholder:
+                    st.markdown("🔍 **Processing your request...** Please wait while I research your question.")
+                
                 with st.spinner("Researching your question..."):
                     try:
                         # Prepare tools based on user selection
@@ -357,9 +363,9 @@ CONSTRAINTS: If you're not certain about something, acknowledge the uncertainty.
                                 if assistant_message:
                                     assistant_message = f"*[Answered using GPT-4o fallback due to GPT-5 response issue]*\n\n{assistant_message}"
                         
-                        # Display response
+                        # Display response - clear loading message and show actual response
                         if assistant_message and assistant_message.strip():
-                            st.markdown(assistant_message)
+                            response_placeholder.markdown(assistant_message)
                             
                             # Add assistant response to chat history
                             st.session_state.messages.append({
@@ -375,7 +381,8 @@ CONSTRAINTS: If you're not certain about something, acknowledge the uncertainty.
                                     st.write(f"**Completion tokens:** {response.usage.completion_tokens}")
                                     st.write(f"**Total tokens:** {response.usage.total_tokens}")
                         else:
-                            # Debug information
+                            # Clear loading message and show debug information
+                            response_placeholder.empty()
                             st.error("❌ No response generated. Please try again.")
                             st.write("**Debug Info:**")
                             st.write(f"- Model: {selected_model}")
@@ -403,6 +410,8 @@ CONSTRAINTS: If you're not certain about something, acknowledge the uncertainty.
                                 st.info("The response appears to be empty for an unknown reason. Try switching models or clearing your chat history.")
                         
                     except Exception as e:
+                        # Clear loading message and show error
+                        response_placeholder.empty()
                         error_message = f"❌ Error: {str(e)}"
                         st.error(error_message)
                         
