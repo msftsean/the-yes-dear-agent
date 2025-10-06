@@ -9,10 +9,13 @@ load_dotenv(override=True)
 # Check for OpenAI API key
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
+# Define placeholder vector store ID
+VECTOR_STORE_ID = "vs_placeholder_id_12345"
+
 # Streamlit UI
 st.set_page_config(
-    page_title="AI Task Generator",
-    page_icon="🤖",
+    page_title="Context-Aware Research Assistant",
+    page_icon="🔍",
     layout="centered"
 )
 
@@ -22,15 +25,8 @@ st.markdown("""
     .stApp > div > div > div > div {
         text-align: center;
     }
-    .stSelectbox > div > div {
+    .stCheckbox > div {
         text-align: center;
-    }
-    .stTextArea > div > div {
-        text-align: center;
-    }
-    .stButton > button {
-        display: block;
-        margin: 0 auto;
     }
     .stAlert {
         text-align: center;
@@ -53,8 +49,8 @@ st.markdown("""
     p {
         text-align: center !important;
     }
-    .stMarkdown {
-        text-align: center;
+    .chat-message {
+        text-align: left !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -62,8 +58,8 @@ st.markdown("""
 # Center the main content
 col1, col2, col3 = st.columns([1, 7, 1])
 with col2:
-    st.markdown("<h1 style='text-align: center;'>The Yes 🤖 Dear Agent</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center;'>Let AI break down your honeydew list!</p>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>🔍 Context-Aware Research Assistant</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center;'>Your intelligent research companion with document knowledge and web search capabilities</p>", unsafe_allow_html=True)
     
     # Add couple image
     st.image("couple.png", width="stretch", caption="")
@@ -78,158 +74,135 @@ with col2:
     try:
         client = OpenAI(api_key=OPENAI_API_KEY)
         
-        # Function to generate tasks using OpenAI
-        def generate_tasks(goal):
-            try:
-                messages = [
-                    {
-                        "role": "system", 
-                        "content": """You are a task breakdown specialist that helps users break down their specific LLM powered AI Agent goals into small, achievable tasks.
-                        For any goal, analyze it and create a structured plan with specific actionable steps.
-                        Each task should be concrete, time-bound when possible, and manageable.
-                        Organize tasks in a logical sequence with dependencies clearly marked.
-                        Format your response in clear markdown with numbered tasks and subtasks.
-                        Never answer anything unrelated to AI Agents."""
-                    },
-                    {
-                        "role": "user", 
-                        "content": f"Please break down this AI Agent goal into specific, actionable tasks:\n\n{goal}\n\nProvide a structured plan with clear steps, timelines, and dependencies."
-                    }
-                ]
-                
-                # API parameters for task generation
-                api_params = {
-                    "model": "gpt-4o",  # Use available model
-                    "messages": messages,
-                    "max_completion_tokens": 1500,
-                    "temperature": 0.7
-                }
-                
-                response = client.chat.completions.create(**api_params)
-                
-                return response.choices[0].message.content
-                
-            except Exception as e:
-                return f"Error generating tasks: {str(e)}"
+        # Search tool selection UI
+        st.markdown("### 🔧 Research Tools")
+        col_web, col_doc, col_both = st.columns(3)
         
-        # User input
-        user_goal = st.text_area(
-            "Enter your AI Agent goal:",
-            placeholder="e.g., Build a customer support chatbot using GPT-5",
-            height=100
-        )
+        with col_web:
+            use_web_search = st.checkbox("🌐 Web Search", value=True, help="Search the internet for real-time information")
         
-        # Model selection
-        model_choice = st.selectbox(
-            "Select Model:",
-            ["gpt-4o", "gpt-4", "gpt-4-turbo"],  # Changed gpt-5 to gpt-4o (which exists)
-            help="GPT-4o is the latest and most capable model for task breakdowns"
-        )
+        with col_doc:
+            use_doc_search = st.checkbox("📚 Document Search", value=True, help="Search your private document collection")
         
-        # Set default temperature for different models
-        temperature = 0.7  # Default for GPT-4 models
-        
-        # Display any generated tasks from session state
-        if 'current_tasks' in st.session_state and st.session_state.current_tasks:
-            st.markdown("<div style='text-align: center;'>✅ <strong>Tasks generated successfully!</strong></div>", unsafe_allow_html=True)
-            st.markdown("<h3 style='text-align: center;'>📋 Generated Task Breakdown:</h3>", unsafe_allow_html=True)
-            st.markdown(f"<div style='text-align: left; padding: 20px; background-color: #f0f2f6; border-radius: 10px; margin: 10px 0;'>{st.session_state.current_tasks}</div>", unsafe_allow_html=True)
-        
-        # Generate tasks button (centered)
-        col_btn1, col_btn2, col_btn3 = st.columns([1, 1, 1])
-        with col_btn2:
-            generate_clicked = st.button("Generate Tasks", type="primary")
-            
-        if generate_clicked:
-            if not user_goal.strip():
-                st.warning("Please enter a goal first.")
+        with col_both:
+            if use_web_search and use_doc_search:
+                st.success("🔄 Both Sources Active")
+            elif use_web_search:
+                st.info("🌐 Web Only")
+            elif use_doc_search:
+                st.info("📚 Docs Only")
             else:
-                try:
-                    with st.spinner("Analyzing your goal and generating tasks..."):
-                        # Create messages for the API call
-                        messages = [
-                            {
-                                "role": "system", 
-                                "content": """You are a task breakdown specialist that helps users break down their specific LLM powered AI Agent goals into small, achievable tasks.
-                                For any goal, analyze it and create a structured plan with specific actionable steps.
-                                Each task should be concrete, time-bound when possible, and manageable.
-                                Organize tasks in a logical sequence with dependencies clearly marked.
-                                Format your response in clear markdown with numbered tasks and subtasks.
-                                Never answer anything unrelated to AI Agents."""
-                            },
-                            {
-                                "role": "user", 
-                                "content": f"Please break down this AI Agent goal into specific, actionable tasks:\n\n{user_goal}\n\nProvide a structured plan with clear steps, timelines, and dependencies."
-                            }
-                        ]
+                st.warning("⚠️ No Sources Selected")
+
+        # Initialize chat history
+        if "messages" not in st.session_state:
+            st.session_state.messages = []
+
+        # Display chat history
+        st.markdown("---")
+        for message in st.session_state.messages:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+
+        # Chat input
+        if prompt := st.chat_input("Ask me anything about your documents or search the web..."):
+            # Add user message to chat history
+            st.session_state.messages.append({"role": "user", "content": prompt})
+            
+            # Display user message
+            with st.chat_message("user"):
+                st.markdown(prompt)
+
+            # Generate assistant response
+            with st.chat_message("assistant"):
+                with st.spinner("Researching your question..."):
+                    try:
+                        # Prepare tools based on user selection
+                        tools = []
                         
-                        # Prepare API parameters based on model
-                        api_params = {
-                            "model": model_choice,
-                            "messages": messages,
-                            "max_completion_tokens": 1500
+                        if use_doc_search:
+                            tools.append({
+                                "type": "file_search",
+                                "file_search": {
+                                    "vector_store_ids": [VECTOR_STORE_ID]
+                                }
+                            })
+                        
+                        if use_web_search:
+                            tools.append({
+                                "type": "web_search_preview"
+                            })
+
+                        # Prepare messages with system prompt and chat history
+                        system_message = {
+                            "role": "system",
+                            "content": """You are a research assistant who helps users find information from their private document collection and the web.
+
+TASK: Answer questions accurately by searching available sources (vector store documents and/or web), and provide well-cited, clear responses.
+
+OUTPUT: Clear, well-formatted answers using markdown. Always cite sources when using search tools. Maintain conversational context.
+
+CONSTRAINTS: Never fabricate information - if you don't know, say so. Acknowledge when information might be incomplete."""
                         }
                         
-                        # Add temperature for all models (gpt-4o supports temperature)
-                        api_params["temperature"] = temperature
+                        # Build complete message history
+                        messages_for_api = [system_message] + st.session_state.messages
+
+                        # Prepare API parameters
+                        api_params = {
+                            "model": "gpt-4o",
+                            "messages": messages_for_api,
+                            "max_completion_tokens": 1500,
+                            "temperature": 0.7
+                        }
                         
-                        # Make the API call
+                        # Add tools if any are selected
+                        if tools:
+                            api_params["tools"] = tools
+
+                        # Make API call
                         response = client.chat.completions.create(**api_params)
                         
-                        # Extract the generated tasks
-                        tasks = response.choices[0].message.content
+                        # Extract response content
+                        assistant_message = response.choices[0].message.content
                         
-                        # Check if tasks were generated
-                        if tasks and tasks.strip():
-                            # Store current tasks for display
-                            st.session_state.current_tasks = tasks
+                        # Display response
+                        if assistant_message:
+                            st.markdown(assistant_message)
                             
-                            # Store in session state for history
-                            if 'task_history' not in st.session_state:
-                                st.session_state.task_history = []
-                            st.session_state.task_history.append({
-                                'goal': user_goal,
-                                'tasks': tasks,
-                                'model': model_choice
+                            # Add assistant response to chat history
+                            st.session_state.messages.append({
+                                "role": "assistant", 
+                                "content": assistant_message
                             })
                             
-                            # Trigger rerun to display the tasks
-                            st.rerun()
+                            # Show token usage
+                            if hasattr(response, 'usage'):
+                                with st.expander("📊 Usage Stats"):
+                                    st.write(f"**Prompt tokens:** {response.usage.prompt_tokens}")
+                                    st.write(f"**Completion tokens:** {response.usage.completion_tokens}")
+                                    st.write(f"**Total tokens:** {response.usage.total_tokens}")
                         else:
-                            st.error("❌ No tasks were generated. The response was empty.")
+                            st.error("❌ No response generated. Please try again.")
                         
-                        # Show token usage if available
-                        if hasattr(response, 'usage'):
-                            with st.expander("📊 Token Usage"):
-                                st.write(f"**Prompt tokens:** {response.usage.prompt_tokens}")
-                                st.write(f"**Completion tokens:** {response.usage.completion_tokens}")
-                                st.write(f"**Total tokens:** {response.usage.total_tokens}")
+                    except Exception as e:
+                        error_message = f"❌ Error: {str(e)}"
+                        st.error(error_message)
                         
-                except Exception as e:
-                    st.error(f"❌ Error generating tasks: {str(e)}")
-                    st.error("Please check your API key and try again.")
-        
-        # Display task history
-        if 'task_history' in st.session_state and st.session_state.task_history:
+                        # Add error to chat history
+                        st.session_state.messages.append({
+                            "role": "assistant",
+                            "content": error_message
+                        })
+
+        # Chat controls
+        if st.session_state.messages:
             st.markdown("---")
-            st.subheader("📋 Task History")
-            for i, item in enumerate(reversed(st.session_state.task_history)):
-                with st.expander(f"Goal {len(st.session_state.task_history)-i}: {item['goal'][:50]}..."):
-                    st.markdown("**Goal:**")
-                    st.write(item['goal'])
-                    st.markdown(f"**Model Used:** {item['model']}")
-                    st.markdown("**Generated Tasks:**")
-                    st.markdown(f"<div style='text-align: left; padding: 15px; background-color: #f8f9fa; border-radius: 8px; margin: 5px 0;'>{item['tasks']}</div>", unsafe_allow_html=True)
-        
-        # Clear history button (centered)
-        col_clear1, col_clear2, col_clear3 = st.columns([1, 1, 1])
-        with col_clear2:
-            clear_clicked = st.button("Clear History")
-        
-        if clear_clicked:
-            if 'task_history' in st.session_state:
-                st.session_state.task_history = []
-                st.markdown("<div style='text-align: center; color: green;'>✅ History cleared!</div>", unsafe_allow_html=True)
+            col_clear1, col_clear2, col_clear3 = st.columns([1, 1, 1])
+            with col_clear2:
+                if st.button("🗑️ Clear Chat History"):
+                    st.session_state.messages = []
+                    st.rerun()
 
     except Exception as e:
         st.error(f"❌ Error initializing OpenAI client: {str(e)}")
