@@ -260,9 +260,12 @@ CONSTRAINTS: Never fabricate information - if you don't know, say so. Acknowledg
                         api_params = {
                             "model": selected_model,
                             "messages": messages_for_api,
-                            "max_completion_tokens": 1500,
-                            "temperature": 0.7
+                            "max_completion_tokens": 1500
                         }
+                        
+                        # Only add temperature for models that support it (not GPT-5)
+                        if selected_model != "gpt-5":
+                            api_params["temperature"] = 0.7
                         
                         # Add tools if any are selected
                         if tools:
@@ -307,12 +310,17 @@ CONSTRAINTS: Never fabricate information - if you don't know, say so. Acknowledg
                                 })
                             
                             # Make second API call to get final response
-                            second_response = client.chat.completions.create(
-                                model=selected_model,
-                                messages=messages_for_api,
-                                max_completion_tokens=1500,
-                                temperature=0.7
-                            )
+                            second_api_params = {
+                                "model": selected_model,
+                                "messages": messages_for_api,
+                                "max_completion_tokens": 1500
+                            }
+                            
+                            # Only add temperature for models that support it (not GPT-5)
+                            if selected_model != "gpt-5":
+                                second_api_params["temperature"] = 0.7
+                                
+                            second_response = client.chat.completions.create(**second_api_params)
                             
                             assistant_message = second_response.choices[0].message.content
                         else:
