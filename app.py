@@ -242,16 +242,28 @@ try:
                             })
 
                         # Prepare messages with system prompt and chat history
-                        system_message = {
-                            "role": "system",
-                            "content": """You are a research assistant who helps users find information from their private document collection and the web.
+                        if tools:
+                            system_message = {
+                                "role": "system",
+                                "content": """You are a research assistant who helps users find information from their private document collection and the web.
 
 TASK: Answer questions accurately by searching available sources (vector store documents and/or web), and provide well-cited, clear responses.
 
 OUTPUT: Clear, well-formatted answers using markdown. Always cite sources when using search tools. Maintain conversational context.
 
 CONSTRAINTS: Never fabricate information - if you don't know, say so. Acknowledge when information might be incomplete."""
-                        }
+                            }
+                        else:
+                            system_message = {
+                                "role": "system",
+                                "content": """You are a helpful research assistant. Provide clear, accurate, and informative responses to user questions.
+
+TASK: Answer questions directly using your knowledge base. Provide comprehensive, well-structured responses.
+
+OUTPUT: Clear, well-formatted answers using markdown. Be thorough and educational in your explanations.
+
+CONSTRAINTS: If you're not certain about something, acknowledge the uncertainty. Focus on being helpful and informative."""
+                            }
                         
                         # Build complete message history
                         messages_for_api = [system_message] + st.session_state.messages
