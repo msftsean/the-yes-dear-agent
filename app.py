@@ -1,5 +1,7 @@
 import streamlit as st
 import os
+import json
+from datetime import datetime
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -122,15 +124,40 @@ with col2:
                         
                         if use_doc_search:
                             tools.append({
-                                "type": "file_search",
-                                "file_search": {
-                                    "vector_store_ids": [VECTOR_STORE_ID]
+                                "type": "function",
+                                "function": {
+                                    "name": "search_documents",
+                                    "description": "Search through the private document collection to find relevant information",
+                                    "parameters": {
+                                        "type": "object",
+                                        "properties": {
+                                            "query": {
+                                                "type": "string",
+                                                "description": "The search query to find relevant documents"
+                                            }
+                                        },
+                                        "required": ["query"]
+                                    }
                                 }
                             })
                         
                         if use_web_search:
                             tools.append({
-                                "type": "web_search_preview"
+                                "type": "function",
+                                "function": {
+                                    "name": "search_web",
+                                    "description": "Search the internet for current information",
+                                    "parameters": {
+                                        "type": "object",
+                                        "properties": {
+                                            "query": {
+                                                "type": "string",
+                                                "description": "The search query to find information on the web"
+                                            }
+                                        },
+                                        "required": ["query"]
+                                    }
+                                }
                             })
 
                         # Prepare messages with system prompt and chat history
@@ -163,8 +190,52 @@ CONSTRAINTS: Never fabricate information - if you don't know, say so. Acknowledg
                         # Make API call
                         response = client.chat.completions.create(**api_params)
                         
-                        # Extract response content
-                        assistant_message = response.choices[0].message.content
+                        # Check if the model wants to call functions
+                        message = response.choices[0].message
+                        
+                        if message.tool_calls:
+                            # Handle function calls
+                            messages_for_api.append(message)
+                            
+                            for tool_call in message.tool_calls:
+                                function_name = tool_call.function.name
+                                function_args = json.loads(tool_call.function.arguments)
+                                
+                                # Execute the function
+                                if function_name == "search_documents":
+                                    function_result = f"📚 Document search results for '{function_args['query']}':\n\n" + \
+                                                    f"• **Sample Document 1**: Relevant information about {function_args['query']} found in your private collection.\n" + \
+                                                    f"• **Sample Document 2**: Additional context about {function_args['query']} from your knowledge base.\n" + \
+                                                    f"• **Sample Document 3**: Related findings on {function_args['query']} from archived materials.\n\n" + \
+                                                    f"*Note: This is a demo - actual document search would query your real vector store with ID: {VECTOR_STORE_ID}*"
+                                elif function_name == "search_web":
+                                    function_result = f"🌐 Web search results for '{function_args['query']}':\n\n" + \
+                                                    f"• **Current Information**: Latest findings on {function_args['query']} from reputable sources.\n" + \
+                                                    f"• **Recent Updates**: New developments related to {function_args['query']} as of {datetime.now().strftime('%B %Y')}.\n" + \
+                                                    f"• **Expert Analysis**: Professional insights about {function_args['query']} from industry leaders.\n\n" + \
+                                                    f"*Note: This is a demo - actual web search would use real-time internet data.*"
+                                else:
+                                    function_result = f"Function {function_name} executed successfully."
+                                
+                                # Add function result to messages
+                                messages_for_api.append({
+                                    "tool_call_id": tool_call.id,
+                                    "role": "tool",
+                                    "name": function_name,
+                                    "content": function_result
+                                })
+                            
+                            # Make second API call to get final response
+                            second_response = client.chat.completions.create(
+                                model="gpt-4o",
+                                messages=messages_for_api,
+                                max_completion_tokens=1500,
+                                temperature=0.7
+                            )
+                            
+                            assistant_message = second_response.choices[0].message.content
+                        else:
+                            assistant_message = message.content
                         
                         # Display response
                         if assistant_message:
