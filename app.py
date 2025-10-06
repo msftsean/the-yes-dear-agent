@@ -21,64 +21,111 @@ st.set_page_config(
     layout="centered"
 )
 
-# Add CSS for center alignment
+# Add CSS for Claude-like interface
 st.markdown("""
 <style>
-    .stApp > div > div > div > div {
+    /* Main app container */
+    .stApp {
+        background-color: #f8f9fa;
+    }
+    
+    /* Header styling */
+    .main-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem;
+        border-radius: 10px;
+        margin-bottom: 1rem;
         text-align: center;
     }
-    .stCheckbox > div {
-        text-align: center;
+    
+    /* Chat container */
+    .chat-container {
+        max-height: 60vh;
+        overflow-y: auto;
+        padding: 1rem;
+        margin-bottom: 2rem;
     }
-    .stAlert {
-        text-align: center;
+    
+    /* Tool selection styling */
+    .tool-selection {
+        background-color: white;
+        padding: 1rem;
+        border-radius: 10px;
+        border: 1px solid #e1e5e9;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    .stSuccess {
-        text-align: center;
+    
+    /* Chat input at bottom */
+    .chat-input-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+        padding: 1rem;
+        border-top: 1px solid #e1e5e9;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        z-index: 999;
     }
-    .stError {
-        text-align: center;
+    
+    /* Make room for fixed input */
+    .main-content {
+        padding-bottom: 120px;
     }
-    .stWarning {
-        text-align: center;
+    
+    /* Chat messages */
+    .stChatMessage {
+        margin-bottom: 1rem;
+        border-radius: 10px;
+        padding: 0.5rem;
     }
-    .stInfo {
-        text-align: center;
+    
+    /* Hide default streamlit elements */
+    .stDeployButton {
+        display: none;
     }
-    h1, h2, h3, h4, h5, h6 {
-        text-align: center !important;
+    
+    /* Tool checkboxes */
+    .stCheckbox {
+        margin: 0.2rem 0;
     }
-    p {
-        text-align: center !important;
-    }
-    .chat-message {
-        text-align: left !important;
+    
+    /* Success/error messages */
+    .stSuccess, .stError, .stWarning, .stInfo {
+        border-radius: 5px;
+        margin: 0.5rem 0;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# Center the main content
-col1, col2, col3 = st.columns([1, 7, 1])
-with col2:
-    st.markdown("<h1 style='text-align: center;'>🔍 Context-Aware Research Assistant</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center;'>Your intelligent research companion with document knowledge and web search capabilities</p>", unsafe_allow_html=True)
+# Main container with proper spacing
+st.markdown('<div class="main-content">', unsafe_allow_html=True)
+
+# Header section
+st.markdown("""
+<div class="main-header">
+    <h1>🔍 Context-Aware Research Assistant</h1>
+    <p>Your intelligent research companion with document knowledge and web search capabilities</p>
+</div>
+""", unsafe_allow_html=True)
+
+# Check if API key is available
+if not OPENAI_API_KEY:
+    st.error("❌ OPENAI_API_KEY not found in environment variables!")
+    st.info("Please add your OpenAI API key to your .env file")
+    st.stop()
+
+# Initialize OpenAI client
+try:
+    client = OpenAI(api_key=OPENAI_API_KEY)
     
-    # Add couple image
-    st.image("couple.png", width="stretch", caption="")
-
-    # Check if API key is available
-    if not OPENAI_API_KEY:
-        st.error("❌ OPENAI_API_KEY not found in environment variables!")
-        st.info("Please add your OpenAI API key to your .env file")
-        st.stop()
-
-    # Initialize OpenAI client
-    try:
-        client = OpenAI(api_key=OPENAI_API_KEY)
-        
-        # Search tool selection UI
-        st.markdown("### 🔧 Research Tools")
-        col_web, col_doc, col_both = st.columns(3)
+    # Tool selection in a nice container
+    with st.container():
+        st.markdown('<div class="tool-selection">', unsafe_allow_html=True)
+        st.markdown("**🔧 Research Tools**")
+        col_web, col_doc, col_status = st.columns([1, 1, 1])
         
         with col_web:
             use_web_search = st.checkbox("🌐 Web Search", value=True, help="Search the internet for real-time information")
@@ -86,28 +133,37 @@ with col2:
         with col_doc:
             use_doc_search = st.checkbox("📚 Document Search", value=True, help="Search your private document collection")
         
-        with col_both:
+        with col_status:
             if use_web_search and use_doc_search:
-                st.success("🔄 Both Sources Active")
+                st.success("🔄 Both Active")
             elif use_web_search:
                 st.info("🌐 Web Only")
             elif use_doc_search:
                 st.info("📚 Docs Only")
             else:
-                st.warning("⚠️ No Sources Selected")
+                st.warning("⚠️ None Selected")
+        st.markdown('</div>', unsafe_allow_html=True)
 
-        # Initialize chat history
-        if "messages" not in st.session_state:
-            st.session_state.messages = []
+    # Initialize chat history
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+        
+    # Welcome message if no chat history
+    if len(st.session_state.messages) == 0:
+        with st.chat_message("assistant"):
+            st.markdown("👋 **Welcome!** I'm your research assistant. I can help you find information using web search and document search. What would you like to research today?")
 
-        # Display chat history
-        st.markdown("---")
+    # Chat history display
+    with st.container():
+        st.markdown('<div class="chat-container">', unsafe_allow_html=True)
         for message in st.session_state.messages:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
+        st.markdown('</div>', unsafe_allow_html=True)
 
-        # Chat input
-        if prompt := st.chat_input("Ask me anything about your documents or search the web..."):
+    # Fixed chat input at bottom (Claude-style)
+    st.markdown('<div class="chat-input-container">', unsafe_allow_html=True)
+    if prompt := st.chat_input("Ask me anything about your documents or search the web...", key="chat_input"):
             # Add user message to chat history
             st.session_state.messages.append({"role": "user", "content": prompt})
             
@@ -266,19 +322,31 @@ CONSTRAINTS: Never fabricate information - if you don't know, say so. Acknowledg
                             "content": error_message
                         })
 
-        # Chat controls
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Chat controls in sidebar
+    with st.sidebar:
+        st.markdown("### 💬 Chat Controls")
         if st.session_state.messages:
-            st.markdown("---")
-            col_clear1, col_clear2, col_clear3 = st.columns([1, 1, 1])
-            with col_clear2:
-                if st.button("🗑️ Clear Chat History"):
-                    st.session_state.messages = []
-                    st.rerun()
+            if st.button("🗑️ Clear Chat History", use_container_width=True):
+                st.session_state.messages = []
+                st.rerun()
+        
+        st.markdown("### ℹ️ About")
+        st.info("This is a Context-Aware Research Assistant built for Week 2 of the AI Agent Bootcamp.")
+        
+        # Show couple image in sidebar
+        st.image("couple.png", caption="AI Research Assistant")
+        
+        st.markdown("---")
+        st.markdown("**Built with:**")
+        st.markdown("• Streamlit")
+        st.markdown("• OpenAI GPT-4o")
+        st.markdown("• Function Calling")
 
-    except Exception as e:
-        st.error(f"❌ Error initializing OpenAI client: {str(e)}")
-        st.info("Please check your API key in the .env file")
+except Exception as e:
+    st.error(f"❌ Error initializing OpenAI client: {str(e)}")
+    st.info("Please check your API key in the .env file")
 
-    # Footer
-    st.markdown("<hr style='text-align: center;'>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: gray;'>Built with Streamlit and OpenAI API</p>", unsafe_allow_html=True)
+# Close main content div
+st.markdown('</div>', unsafe_allow_html=True)
