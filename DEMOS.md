@@ -4,7 +4,7 @@
 ![Status](https://img.shields.io/badge/Status-Demo%20Ready-brightgreen)
 ![Updated](https://img.shields.io/badge/Updated-Dec%202024-orange)
 
-This folder contains comprehensive demo materials for presenting your Context-Aware Research Assistant with Hybrid API Integration.
+This guide contains comprehensive demo materials for presenting your Context-Aware Research Assistant with Hybrid API Integration.
 
 ## 🎯 Demo Files
 

@@ -1,11 +1,11 @@
 # The 'Yes Dear' Assistant 🔍
 
-![Version](https://img.shields.io/badge/Version-2.2.0-blue)
+![Version](https://img.shields.io/badge/Version-2.4.0-blue)
 ![Bootcamp](https://img.shields.io/badge/Bootcamp-Week%202%20Complete-success)
 ![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-orange)
 ![Framework](https://img.shields.io/badge/Framework-Streamlit-red)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+![APIs](https://img.shields.io/badge/APIs-Hybrid%20System-purple)
 
 A sophisticated AI-powered research assistant built with Streamlit and OpenAI's GPT models. Your intelligent companion for tackling research tasks and honeydew lists with conversational AI and search capabilities.
 
