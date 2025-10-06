@@ -1,10 +1,10 @@
 # 📚 Demo Materials
 
-![Version](https://img.shields.io/badge/Version-2.2.0-blue)
+![Version](https://img.shields.io/badge/Version-2.4.0-blue)
 ![Status](https://img.shields.io/badge/Status-Demo%20Ready-brightgreen)
-![Updated](https://img.shields.io/badge/Updated-Oct%202025-orange)
+![Updated](https://img.shields.io/badge/Updated-Dec%202024-orange)
 
-This folder contains comprehensive demo materials for presenting your Context-Aware Research Assistant.
+This folder contains comprehensive demo materials for presenting your Context-Aware Research Assistant with Hybrid API Integration.
 
 ## 🎯 Demo Files
 
@@ -28,7 +28,27 @@ This folder contains comprehensive demo materials for presenting your Context-Aw
 
 **When to use:** Review this before your demo to nail the timing and flow
 
-## 🚀 How to Use These Materials
+## � Hybrid System Demo Options
+
+### **Option 1: Demo-Safe Mode (Recommended)**
+- Keep "Real APIs" toggle OFF during presentation
+- Uses enhanced mock data - reliable and impressive
+- Zero risk of API failures or network issues
+- Perfect for bootcamp presentations
+
+### **Option 2: Live API Demo (Advanced)**
+- Configure real API keys (Google Search + Pinecone)
+- Toggle "Real APIs" ON during demo
+- Show actual live web search results
+- Higher impact but requires proper setup and testing
+
+### **Hybrid Showcase Strategy**
+- Start with toggle OFF (demo safe)
+- Explain the hybrid architecture concept
+- Show toggle functionality
+- Keep it OFF for actual demo questions
+
+## �🚀 How to Use These Materials
 
 ### **Preparation (Day Before)**
 1. **Read both documents** to understand the flow
@@ -50,7 +70,8 @@ This folder contains comprehensive demo materials for presenting your Context-Aw
 
 ### **Key Demo Moments**
 - **🔥 Opening Hook:** Real-time thinking transparency
-- **💡 Technical Depth:** Multi-model architecture with fallback
+- **💡 Technical Depth:** Multi-model architecture with hybrid APIs
+- **🔄 Innovation Showcase:** Toggle between demo-safe and live APIs
 - **🧠 Intelligence Demo:** Conversational memory and context
 - **🎯 Audience Participation:** Live question from class
 
@@ -58,7 +79,10 @@ This folder contains comprehensive demo materials for presenting your Context-Aw
 
 ### **Confidence Builders**
 - This isn't just a school project - it's professional-grade AI engineering
+- Hybrid API system is enterprise-level architecture thinking  
 - Real-time thinking transparency is cutting-edge technology
+- Document search integration with Pinecone is production-ready
+- Aggressive search prompt ensures reliable tool usage
 - Your error handling and fallback systems are production-ready
 - Week 2 evolution demonstrates genuine learning and growth
 

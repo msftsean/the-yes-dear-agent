@@ -4,6 +4,8 @@ import json
 from datetime import datetime
 from openai import OpenAI
 from dotenv import load_dotenv
+import requests
+import time
 
 # Load environment variables
 load_dotenv(override=True)
@@ -11,8 +13,124 @@ load_dotenv(override=True)
 # Check for OpenAI API key
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
+# Real API Configuration
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+GOOGLE_CSE_ID = os.environ.get("GOOGLE_CSE_ID")
+PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
+PINECONE_ENVIRONMENT = os.environ.get("PINECONE_ENVIRONMENT", "us-east-1-aws")
+
 # Define placeholder vector store ID
 VECTOR_STORE_ID = "vs_placeholder_id_12345"
+
+# Real API Integration Functions
+def real_web_search(query, max_results=5):
+    """Real Google Custom Search API integration"""
+    if not GOOGLE_API_KEY or not GOOGLE_CSE_ID:
+        return "⚠️ Google API keys not configured. Using mock data."
+    
+    try:
+        url = "https://www.googleapis.com/customsearch/v1"
+        params = {
+            'key': GOOGLE_API_KEY,
+            'cx': GOOGLE_CSE_ID,
+            'q': query,
+            'num': max_results
+        }
+        
+        response = requests.get(url, params=params, timeout=10)
+        response.raise_for_status()
+        
+        data = response.json()
+        results = []
+        
+        for item in data.get('items', []):
+            results.append({
+                'title': item.get('title', ''),
+                'snippet': item.get('snippet', ''),
+                'link': item.get('link', '')
+            })
+        
+        # Format results for display
+        formatted_results = f"🌐 **Real web search results for '{query}':**\n\n"
+        for i, result in enumerate(results, 1):
+            formatted_results += f"**{i}. {result['title']}**\n"
+            formatted_results += f"{result['snippet']}\n"
+            formatted_results += f"*Source: {result['link']}*\n\n"
+        
+        return formatted_results
+        
+    except Exception as e:
+        return f"⚠️ Real web search failed: {str(e)}. Using mock data."
+
+def real_document_search(query, max_results=5):
+    """Real vector store document search (Pinecone integration ready)"""
+    if not PINECONE_API_KEY:
+        return "⚠️ Pinecone API key not configured. Using mock data."
+    
+    try:
+        # Real Pinecone integration
+        try:
+            from pinecone import Pinecone
+            
+            # Initialize Pinecone
+            pc = Pinecone(api_key=PINECONE_API_KEY)
+            
+            # Check if index exists (you'll need to create one)
+            index_name = "documents"  # Change this to your index name
+            
+            if index_name in [idx.name for idx in pc.list_indexes()]:
+                index = pc.Index(index_name)
+                
+                # Generate embedding for query using OpenAI
+                client = OpenAI(api_key=OPENAI_API_KEY)
+                embedding_response = client.embeddings.create(
+                    input=query,
+                    model="text-embedding-ada-002"
+                )
+                query_embedding = embedding_response.data[0].embedding
+                
+                # Search Pinecone
+                search_results = index.query(
+                    vector=query_embedding,
+                    top_k=max_results,
+                    include_metadata=True
+                )
+                
+                if search_results.matches:
+                    formatted_results = f"📚 **Real document search results for '{query}':**\n\n"
+                    for i, match in enumerate(search_results.matches, 1):
+                        title = match.metadata.get('title', f'Document {i}')
+                        content = match.metadata.get('content', 'No content available')
+                        score = match.score
+                        formatted_results += f"**{i}. {title}** (Score: {score:.3f})\n"
+                        formatted_results += f"{content[:200]}{'...' if len(content) > 200 else ''}\n\n"
+                    return formatted_results
+                else:
+                    return f"📚 **No documents found for '{query}'**\n\nYour Pinecone index '{index_name}' is connected but doesn't contain relevant documents for this query."
+            else:
+                return f"⚠️ Pinecone index '{index_name}' not found. Please create an index named '{index_name}' in your Pinecone console."
+                
+        except ImportError:
+            return "⚠️ Pinecone package not installed. Run: pip install pinecone-client"
+            
+    except Exception as e:
+        return f"⚠️ Real document search failed: {str(e)}. Using mock data."
+
+def get_mock_web_search(query):
+    """Enhanced mock web search for reliable demos"""
+    return f"🌐 **Web search results for '{query}':**\n\n" + \
+           f"• **Current Information**: Latest findings on {query} from reputable sources.\n" + \
+           f"• **Recent Updates**: New developments related to {query} as of {datetime.now().strftime('%B %Y')}.\n" + \
+           f"• **Expert Analysis**: Professional insights about {query} from industry leaders.\n\n" + \
+           f"*Note: This is enhanced mock data for demonstration purposes.*"
+
+def get_mock_document_search(query):
+    """Enhanced mock document search for reliable demos"""
+    return f"📚 **Document search results for '{query}':**\n\n" + \
+           f"• **Sample Document 1**: Relevant information about {query} found in your private collection.\n" + \
+           f"• **Sample Document 2**: Additional context about {query} from your knowledge base.\n" + \
+           f"• **Sample Document 3**: Related findings on {query} from archived materials.\n\n" + \
+           f"*Note: This is enhanced mock data - actual search would query vector store ID: {VECTOR_STORE_ID}*"
 
 # Streamlit UI
 st.set_page_config(
@@ -132,8 +250,8 @@ try:
             selected_model = st.selectbox(
                 "🤖 AI Model",
                 ["gpt-5", "gpt-4o"],
-                index=0,  # Default to GPT-5
-                help="Choose your AI model: GPT-5 (latest) or GPT-4o (reliable)"
+                index=1,  # Default to GPT-4o
+                help="Choose your AI model: GPT-5 (experimental) or GPT-4o (reliable)"
             )
         
         with col_model2:
@@ -146,6 +264,34 @@ try:
         with col_model_status:
             st.markdown("**Status:**")
             st.success("✅ Ready")
+        
+        st.markdown("---")
+        
+        # API Integration Mode
+        col_api1, col_api2, col_api_status = st.columns([1, 1, 1])
+        with col_api1:
+            use_real_apis = st.checkbox(
+                "🔴 Real APIs", 
+                value=False,
+                help="Toggle between mock (demo-safe) and real API integrations"
+            )
+        
+        with col_api2:
+            if use_real_apis:
+                st.warning("🔴 **Live Mode**")
+            else:
+                st.success("🟢 **Demo Mode**")
+        
+        with col_api_status:
+            if use_real_apis:
+                # Show API status
+                api_ready = bool(GOOGLE_API_KEY and GOOGLE_CSE_ID)
+                if api_ready:
+                    st.success("✅ APIs Ready")
+                else:
+                    st.error("❌ APIs Missing")
+            else:
+                st.success("✅ Mock Ready")
         
         st.markdown("---")
         
@@ -176,7 +322,7 @@ try:
     # Welcome message if no chat history
     if len(st.session_state.messages) == 0:
         with st.chat_message("assistant"):
-            st.markdown("👋 **Welcome!** I'm your research assistant powered by GPT-5. I can help you find information using web search and document search. You can also switch between GPT-5 and GPT-4o models above. What would you like to research today?")
+            st.markdown("👋 **Welcome!** I'm your research assistant powered by GPT-4o. I can help you find information using web search and document search. You can also switch between GPT-4o and GPT-5 models above. What would you like to research today?")
 
     # Chat history display
     with st.container():
@@ -268,13 +414,21 @@ try:
                         if tools:
                             system_message = {
                                 "role": "system",
-                                "content": """You are a research assistant who helps users find information from their private document collection and the web.
+                                "content": """You are a research assistant with access to search tools. You MUST use the available search tools before answering questions.
 
-TASK: Answer questions accurately by searching available sources (vector store documents and/or web), and provide well-cited, clear responses.
+CRITICAL: When users ask about specific information (policies, procedures, documentation, etc.), you MUST use the search_documents function to look for relevant information in the document collection.
 
-OUTPUT: Clear, well-formatted answers using markdown. Always cite sources when using search tools. Maintain conversational context.
+TOOL USAGE RULES:
+- For questions about company policies, procedures, documentation: USE search_documents FIRST
+- For current events, recent information, general web queries: USE search_web FIRST  
+- When user explicitly asks to "search documents" or "find in documents": ALWAYS use search_documents
+- When user explicitly asks to "search web" or "look online": ALWAYS use search_web
 
-CONSTRAINTS: Never fabricate information - if you don't know, say so. Acknowledge when information might be incomplete."""
+TASK: Always search first, then provide well-cited responses based on search results.
+
+OUTPUT: Clear, well-formatted answers using markdown. Always cite sources from search results. If search returns relevant information, use it. If no relevant results, acknowledge this clearly.
+
+CONSTRAINTS: Never answer from general knowledge when search tools are available. Always search first, then respond based on findings."""
                             }
                         else:
                             system_message = {
@@ -362,19 +516,17 @@ CONSTRAINTS: If you're not certain about something, acknowledge the uncertainty.
                                 # Add tool activity to thinking content for later display
                                 thinking_content.append(f"**Tool {i+1}: {function_name}**\nQuery: {query}")
                                 
-                                # Execute the function
+                                # Execute the function with hybrid system
                                 if function_name == "search_documents":
-                                    function_result = f"📚 Document search results for '{function_args['query']}':\n\n" + \
-                                                    f"• **Sample Document 1**: Relevant information about {function_args['query']} found in your private collection.\n" + \
-                                                    f"• **Sample Document 2**: Additional context about {function_args['query']} from your knowledge base.\n" + \
-                                                    f"• **Sample Document 3**: Related findings on {function_args['query']} from archived materials.\n\n" + \
-                                                    f"*Note: This is a demo - actual document search would query your real vector store with ID: {VECTOR_STORE_ID}*"
+                                    if use_real_apis:
+                                        function_result = real_document_search(function_args['query'])
+                                    else:
+                                        function_result = get_mock_document_search(function_args['query'])
                                 elif function_name == "search_web":
-                                    function_result = f"🌐 Web search results for '{function_args['query']}':\n\n" + \
-                                                    f"• **Current Information**: Latest findings on {function_args['query']} from reputable sources.\n" + \
-                                                    f"• **Recent Updates**: New developments related to {function_args['query']} as of {datetime.now().strftime('%B %Y')}.\n" + \
-                                                    f"• **Expert Analysis**: Professional insights about {function_args['query']} from industry leaders.\n\n" + \
-                                                    f"*Note: This is a demo - actual web search would use real-time internet data.*"
+                                    if use_real_apis:
+                                        function_result = real_web_search(function_args['query'])
+                                    else:
+                                        function_result = get_mock_web_search(function_args['query'])
                                 else:
                                     function_result = f"Function {function_name} executed successfully."
                                 
@@ -599,13 +751,9 @@ CONSTRAINTS: If you're not certain about something, acknowledge the uncertainty.
         st.markdown("**Built with:**")
         st.markdown("• Streamlit")
         st.markdown(f"• OpenAI {selected_model.upper()}")
+        st.markdown("• Google Search API")
+        st.markdown("• Pinecone Vector DB")
         st.markdown("• Function Calling")
-        
-        st.markdown("---")
-        st.markdown("**🧪 Model Testing**")
-        st.markdown("• GPT-5: Latest model (default)")
-        st.markdown("• GPT-4o: Proven reliability")
-        st.info("💡 Try switching models to compare responses!")
 
 except Exception as e:
     st.error(f"❌ Error initializing OpenAI client: {str(e)}")

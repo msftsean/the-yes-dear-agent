@@ -21,16 +21,18 @@ A sophisticated AI-powered research assistant built with Streamlit and OpenAI's 
 
 ### 🛠️ **Search & Tools**
 - **📚 Document Search**: Query private document collections (vector store integration)
-- **🌐 Web Search**: Real-time internet information retrieval
+- **🌐 Web Search**: Real-time internet information retrieval  
+- **🔄 Hybrid API System**: Toggle between mock (demo-safe) and real API integrations
 - **🔧 Tool Selection**: Dynamic enable/disable of search capabilities
 - **📊 Usage Tracking**: Monitor API usage with detailed token consumption stats
 
 ### 🎨 **User Experience**
-- **� "Yes Dear" Theme**: Honeydew list assistant branding
-- **🎨 Modern UI**: Professional gradient design with sidebar navigation
+- **💙 "Yes Dear" Theme**: Honeydew list assistant branding
+- **🎨 Modern UI**: Professional gradient design with real-time thinking display
 - **📱 Responsive**: Works seamlessly across desktop and mobile
 - **🚀 Fast & Reliable**: Optimized performance with graceful error handling
 - **🔒 Secure**: Environment-based API key management
+- **🔄 Demo/Production Toggle**: Switch between safe demos and live APIs
 
 ## 🚀 Quick Start
 
@@ -60,9 +62,24 @@ A sophisticated AI-powered research assistant built with Streamlit and OpenAI's 
    ```
 
 4. **Configure environment**
-   Create a `.env` file in the root directory:
+   
+   **Option A: Demo Mode (Recommended for bootcamp)**
+   Create a `.env` file with just OpenAI:
    ```
    OPENAI_API_KEY=your_openai_api_key_here
+   ```
+   
+   **Option B: Production Mode (Real APIs)**
+   Copy the template and add all keys:
+   ```bash
+   cp env.template .env
+   ```
+   Then edit `.env` with your API keys:
+   ```
+   OPENAI_API_KEY=your_openai_api_key_here
+   GOOGLE_API_KEY=your_google_api_key_here
+   GOOGLE_CSE_ID=your_custom_search_engine_id_here
+   PINECONE_API_KEY=your_pinecone_api_key_here
    ```
 
 5. **Run the application**
@@ -88,9 +105,10 @@ A sophisticated AI-powered research assistant built with Streamlit and OpenAI's 
 1. **Start Chatting**: Type your research question in the input box at the bottom
    - Example: "What is artificial intelligence and its applications?"
    
-2. **Choose Tools**: Select your search preferences:
-   - **🌐 Web Search**: For current, real-time information
-   - **📚 Document Search**: For your private document collection
+2. **Choose Mode & Tools**:
+   - **🔄 API Mode**: Toggle "Real APIs" for live integrations or keep off for demo-safe mock data
+   - **🌐 Web Search**: For current, real-time information (Google Custom Search when live)
+   - **📚 Document Search**: For your private document collection (Pinecone integration ready)
    - **Both**: Comprehensive search across all sources
 
 3. **Get Responses**: The assistant will:
@@ -109,36 +127,41 @@ A sophisticated AI-powered research assistant built with Streamlit and OpenAI's 
 
 ```
 lo-agent-bootcamp/
-├── app.py              # Main Streamlit application (Week 2 - Research Assistant)
-├── couple.png          # Header image
-├── .env                # Environment variables (create this)
-├── requirements.txt    # Project dependencies
-├── RELEASE_NOTES.md    # Version history and bootcamp progress
-├── TEST_SCRIPT.md      # Comprehensive testing guide
-├── env/                # Virtual environment
-├── archive/            # Week 1 files and development history
-│   ├── agent.py        # Week 1 - Alternative agent implementation
-│   ├── app_backup.py   # Week 1 - Task generator backup
-│   ├── *_test.py       # Development test files
-│   └── virtualenv-readme.md # Setup documentation
-└── README.md           # This file
+├── app.py                    # Main Streamlit application (v2.3.0 - Hybrid APIs)
+├── .env                      # Environment variables (create this)
+├── env.template              # Environment template with all API keys
+├── requirements.txt          # Project dependencies (includes real API packages)
+├── DEMOS.md                  # Demo presentation guide
+├── assets/
+│   ├── images/
+│   │   └── couple.png        # Header image
+│   └── docs/                 # Documentation
+│       ├── RELEASE_NOTES.md  # Version history
+│       ├── DEMO_SCRIPT.md    # 5-minute presentation script
+│       └── ...               # Additional documentation
+├── env/                      # Virtual environment
+├── archive/                  # Development history
+│   ├── app_clean.py          # Previous versions
+│   └── ...                   # Legacy files
+└── README.md                 # This file
 ```
 
 ## 🔧 Technical Details
 
 ### Core Technologies
-- **Frontend**: Streamlit with Claude.ai-inspired custom CSS
-- **AI Model**: OpenAI GPT-4o with function calling
-- **Search Tools**: Document search (vector store) + Web search
+- **Frontend**: Streamlit with Claude.ai-inspired custom CSS + real-time thinking display
+- **AI Models**: OpenAI GPT-5 (primary) + GPT-4o (fallback) with function calling
+- **Search Tools**: Hybrid system - Mock (demo) + Real APIs (Google Custom Search, Pinecone)
 - **Environment Management**: python-dotenv for secure API keys
 - **Language**: Python 3.12+
 
 ### Key Components
-- **Conversational AI**: Chat interface with context memory
-- **Function Calling**: OpenAI tools integration for search capabilities
-- **UI Layout**: Modern gradient design with fixed bottom input
+- **Conversational AI**: Chat interface with context memory + real-time chain of thought
+- **Hybrid API System**: Toggle between mock data (demo-safe) and live integrations
+- **Function Calling**: OpenAI tools integration with dynamic real/mock execution
+- **UI Layout**: Modern gradient design with live thinking process display
 - **Session Management**: Streamlit session state for chat persistence
-- **Error Handling**: Graceful degradation and user-friendly messages
+- **Error Handling**: Graceful degradation with intelligent fallback systems
 
 ### API Configuration
 - **Model**: GPT-4o (latest and most capable)
@@ -246,8 +269,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 See [Release Notes](assets/docs/RELEASE_NOTES.md) for detailed version history, bootcamp progress, and feature evolution.
 
-**Current Version**: 2.2.0 - "Context-Aware Research Assistant"  
-**Bootcamp Status**: Week 2 Complete ✅
+**Current Version**: 2.4.0 - "Production-Ready Research Assistant"  
+**Bootcamp Status**: Week 2 Complete ✅ + Production Deployment Ready
 
 ##  Support
 
