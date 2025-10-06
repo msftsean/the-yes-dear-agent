@@ -1,0 +1,21 @@
+ACME Corp Employee Handbook 2024
+
+COMPANY POLICIES
+
+Work From Home Policy:
+Employees may work remotely up to 3 days per week with manager approval. Core collaboration hours are 10 AM - 3 PM PST for all remote workers.
+
+Vacation Policy:
+All full-time employees accrue 2.5 vacation days per month (30 days annually). Vacation requests must be submitted at least 2 weeks in advance through the HR portal.
+
+Expense Reimbursement:
+Business expenses under $100 require receipt submission within 30 days. Expenses over $100 require pre-approval from department heads.
+
+Code of Conduct:
+ACME Corp maintains a zero-tolerance policy for harassment. All incidents should be reported to HR immediately through our confidential reporting system.
+
+IT Security:
+Employees must use company-approved VPN for all remote work. Personal devices accessing company data require MDM enrollment and security compliance checks.
+
+Professional Development:
+The company provides $2,000 annually per employee for professional development, including conferences, courses, and certifications relevant to their role.

@@ -1,0 +1,35 @@
+ACME API Documentation v3.2
+
+AUTHENTICATION
+
+API Key Authentication:
+All requests must include the X-API-Key header with your unique API key. Keys can be generated in the developer portal under Account Settings.
+
+Rate Limiting:
+API calls are limited to 1000 requests per hour per API key. Rate limit headers are included in all responses:
+- X-RateLimit-Limit: 1000
+- X-RateLimit-Remaining: 847
+- X-RateLimit-Reset: 1634567890
+
+ENDPOINTS
+
+GET /api/v3/users
+Returns paginated list of users. Supports query parameters: limit (max 100), offset, search, status.
+
+POST /api/v3/users
+Creates new user account. Required fields: email, name, role. Optional: department, manager_id.
+
+GET /api/v3/projects/{id}
+Returns project details including members, timeline, and current status. Requires read permissions for the specified project.
+
+ERROR HANDLING
+
+HTTP Status Codes:
+- 200: Success
+- 400: Bad Request - Invalid parameters
+- 401: Unauthorized - Missing or invalid API key
+- 403: Forbidden - Insufficient permissions
+- 429: Too Many Requests - Rate limit exceeded
+- 500: Internal Server Error
+
+All errors return JSON with 'error' and 'message' fields providing detailed error information.

@@ -70,9 +70,9 @@ A sophisticated AI-powered research assistant built with Streamlit and OpenAI's 
    ```
    
    **Option B: Production Mode (Real APIs)**
-   Copy the template and add all keys:
+   Copy the template from archive and add all keys:
    ```bash
-   cp env.template .env
+   cp archive/env.template .env
    ```
    Then edit `.env` with your API keys:
    ```
@@ -127,74 +127,67 @@ A sophisticated AI-powered research assistant built with Streamlit and OpenAI's 
 
 ```
 lo-agent-bootcamp/
-├── app.py                    # Main Streamlit application (v2.3.0 - Hybrid APIs)
+├── app.py                    # Main Streamlit application (v2.4.0 - Production Ready)
 ├── .env                      # Environment variables (create this)
-├── env.template              # Environment template with all API keys
-├── requirements.txt          # Project dependencies (includes real API packages)
+├── requirements.txt          # Project dependencies
 ├── DEMOS.md                  # Demo presentation guide
+├── README.md                 # This file
 ├── assets/
 │   ├── images/
 │   │   └── couple.png        # Header image
-│   └── docs/                 # Documentation
+│   └── docs/                 # Complete documentation
 │       ├── RELEASE_NOTES.md  # Version history
-│       ├── DEMO_SCRIPT.md    # 5-minute presentation script
-│       └── ...               # Additional documentation
+│       ├── DEMO_SCRIPT.md    # Presentation scripts
+│       ├── HYBRID_API_GUIDE.md # API integration guide
+│       ├── PRODUCTION_GUIDE.md # Deployment instructions
+│       └── ...               # Additional guides
 ├── env/                      # Virtual environment
-├── archive/                  # Development history
-│   ├── app_clean.py          # Previous versions
-│   └── ...                   # Legacy files
-└── README.md                 # This file
+└── archive/                  # Development files and templates
+    ├── test_files/           # Test scripts and utilities
+    ├── sample_documents/     # Demo data files
+    ├── env.template          # Environment configuration template
+    └── ...                   # Legacy files
 ```
 
-## 🔧 Technical Details
+## � **Documentation**
 
-### Core Technologies
-- **Frontend**: Streamlit with Claude.ai-inspired custom CSS + real-time thinking display
-- **AI Models**: OpenAI GPT-5 (primary) + GPT-4o (fallback) with function calling
-- **Search Tools**: Hybrid system - Mock (demo) + Real APIs (Google Custom Search, Pinecone)
-- **Environment Management**: python-dotenv for secure API keys
-- **Language**: Python 3.12+
+For detailed setup, deployment, and technical information:
 
-### Key Components
-- **Conversational AI**: Chat interface with context memory + real-time chain of thought
-- **Hybrid API System**: Toggle between mock data (demo-safe) and live integrations
-- **Function Calling**: OpenAI tools integration with dynamic real/mock execution
-- **UI Layout**: Modern gradient design with live thinking process display
-- **Session Management**: Streamlit session state for chat persistence
-- **Error Handling**: Graceful degradation with intelligent fallback systems
+### **📋 Quick References**
+- **[🎪 DEMOS.md](DEMOS.md)** - Complete presentation guides and demo strategies
+- **[🔄 Hybrid API Guide](assets/docs/HYBRID_API_GUIDE.md)** - API integration and configuration
+- **[🚀 Production Guide](assets/docs/PRODUCTION_GUIDE.md)** - Deployment instructions
 
-### API Configuration
-- **Model**: GPT-4o (latest and most capable)
-- **Token Limits**: 1500 max completion tokens
-- **Temperature**: 0.7 for balanced accuracy and creativity
-- **Tools**: Dynamic function calling based on user selection
-- **Context**: Full conversation history maintained
+### **📖 Detailed Guides**
+- **[📈 Release Notes](assets/docs/RELEASE_NOTES.md)** - Version history and features  
+- **[🔧 Technical Guide](assets/docs/TECHNICAL_GUIDE.md)** - Architecture and implementation details
+- **[🎯 Demo Scripts](assets/docs/DEMO_SCRIPT.md)** - Presentation materials and timing
 
-## 🎨 UI Features
+## 🚀 **Quick Start**
 
-### Visual Design
-- **Centered Layout**: Professional, focused appearance
-- **Custom CSS**: Enhanced styling for better UX
-- **Responsive Images**: Proportional scaling across devices
-- **Color Scheme**: Clean, modern aesthetic
+### **Demo Mode (Recommended)**
+```bash
+# 1. Install dependencies
+pip install -r requirements.txt
 
-### User Experience
-- **Left-Justified Tasks**: Optimal readability for structured content
-- **Centered Controls**: Intuitive form element placement
-- **Visual Feedback**: Success/error states with appropriate colors
-- **Progressive Disclosure**: Collapsible sections for advanced features
+# 2. Configure OpenAI
+echo "OPENAI_API_KEY=your_key_here" > .env
 
-## 🔒 Security Best Practices
+# 3. Run application
+streamlit run app.py
+```
 
-- **Environment Variables**: API keys stored securely in `.env`
-- **Git Ignore**: Sensitive files excluded from version control
-- **Error Handling**: No sensitive data exposed in error messages
+### **Production Mode**
+```bash
+# 1. Copy configuration template
+cp archive/env.template .env
 
-## 📊 Performance
+# 2. Edit .env with all your API keys
+# 3. Run with real API integrations enabled
+streamlit run app.py
+```
 
-- **Token Efficiency**: Optimized prompts for cost-effective API usage
-- **Session Persistence**: Efficient state management
-- **Responsive Loading**: Spinner feedback during API calls
+**📖 See [Production Guide](assets/docs/PRODUCTION_GUIDE.md) for detailed setup instructions.**
 
 ## 🐛 Troubleshooting
 

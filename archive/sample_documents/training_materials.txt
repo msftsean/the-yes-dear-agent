@@ -1,0 +1,51 @@
+New Employee Onboarding Guide
+ACME Corp Training Department | Version 3.4
+
+WEEK 1: COMPANY ORIENTATION
+
+Day 1: Welcome & Setup
+- IT equipment allocation and setup (laptop, monitors, access cards)
+- HR paperwork completion and benefits enrollment
+- Office tour and emergency procedures briefing
+- Meet your manager and immediate team members
+
+Day 2-3: Company Culture & Values
+- ACME Corp history and mission presentation
+- Core values workshop and team-building exercises
+- Ethics training and code of conduct review
+- Introduction to company communication tools (Slack, Zoom, Confluence)
+
+Day 4-5: Role-Specific Training
+- Department overview and organizational structure
+- Job responsibilities and performance expectations
+- Tools and systems training relevant to position
+- Shadow experienced team member
+
+WEEK 2: SKILLS DEVELOPMENT
+
+Technical Training:
+- Company software and platform tutorials
+- Security awareness and data protection protocols
+- Project management methodology (Agile/Scrum)
+- Quality assurance and testing procedures
+
+Soft Skills Development:
+- Communication and presentation skills workshop
+- Time management and productivity techniques
+- Customer service excellence training
+- Conflict resolution and team collaboration
+
+COMPLETE REQUIREMENTS:
+
+✓ Finish all mandatory e-learning modules
+✓ Pass security awareness quiz (80% minimum)
+✓ Complete equipment checklist with IT
+✓ Submit first week reflection report
+✓ Schedule 30-60-90 day check-ins with manager
+
+RESOURCES & SUPPORT:
+
+- HR Help Desk: ext. 2200 or hr@acmecorp.com
+- IT Support Portal: ithelp.acmecorp.com
+- Learning Management System: learning.acmecorp.com
+- Employee Resource Groups: erg.acmecorp.com
