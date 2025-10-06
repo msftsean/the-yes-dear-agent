@@ -1,17 +1,35 @@
-# The Yes 🤖 Dear Agent
+# The 'Yes Dear' Assistant 🔍
 
-A sophisticated AI-powered task breakdown application built with Streamlit and OpenAI's GPT models. Transform your high-level goals into actionable, structured task lists with just a few clicks.
+![Version](https://img.shields.io/badge/Version-2.1.0-blue)
+![Bootcamp](https://img.shields.io/badge/Bootcamp-Week%202%20Complete-success)
+![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
+![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-orange)
+![Framework](https://img.shields.io/badge/Framework-Streamlit-red)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
+A sophisticated AI-powered research assistant built with Streamlit and OpenAI's GPT models. Your intelligent companion for tackling research tasks and honeydew lists with conversational AI and search capabilities.
 
 ![Yes Dear Agent](couple.png)
 
 ## 🌟 Features
 
-- **🎯 Intelligent Task Breakdown**: Convert complex goals into manageable, time-bound tasks
-- **🤖 Multiple AI Models**: Choose from GPT-4o, GPT-4, and GPT-4-turbo for optimal results  
-- **🎨 Beautiful UI**: Centered, responsive design with custom styling
-- **📚 Task History**: Keep track of all your previous task generations
-- **📊 Token Usage Tracking**: Monitor API usage with detailed token consumption stats
-- **💾 Session Persistence**: Tasks remain visible until you generate new ones
+### 💬 **Conversational AI**
+- **🤖 Chat Interface**: Claude.ai-inspired conversational experience
+- **🧠 Context Awareness**: Maintains conversation history and context
+- **🔍 Research Assistant**: Specialized for research and information tasks
+- **💡 Smart Responses**: GPT-4o powered with function calling capabilities
+
+### 🛠️ **Search & Tools**
+- **📚 Document Search**: Query private document collections (vector store integration)
+- **🌐 Web Search**: Real-time internet information retrieval
+- **🔧 Tool Selection**: Dynamic enable/disable of search capabilities
+- **📊 Usage Tracking**: Monitor API usage with detailed token consumption stats
+
+### 🎨 **User Experience**
+- **� "Yes Dear" Theme**: Honeydew list assistant branding
+- **🎨 Modern UI**: Professional gradient design with sidebar navigation
+- **📱 Responsive**: Works seamlessly across desktop and mobile
+- **🚀 Fast & Reliable**: Optimized performance with graceful error handling
 - **🔒 Secure**: Environment-based API key management
 
 ## 🚀 Quick Start
@@ -55,61 +73,79 @@ A sophisticated AI-powered task breakdown application built with Streamlit and O
 6. **Open in browser**
    Navigate to `http://localhost:8501` (or the URL shown in terminal)
 
-## 🎯 How to Use
+## � Bootcamp Progress
 
-1. **Enter Your Goal**: Describe what you want to accomplish in the text area
-   - Example: "Build a customer support chatbot using GPT-4"
+| Week | Assignment | Status | Key Features |
+|------|------------|--------|--------------|
+| **Week 1** | Task Generator | ✅ Complete | Basic AI agent, task breakdown, simple UI |
+| **Week 2** | Research Assistant | ✅ Complete | Chat interface, function calling, search tools |
+| **Week 3** | Advanced Features | 🔄 Coming Soon | Enhanced integrations, production features |
+
+> **Current Status**: Week 2 Complete - Full conversational research assistant with tool integration
+
+## �🎯 How to Use
+
+1. **Start Chatting**: Type your research question in the input box at the bottom
+   - Example: "What is artificial intelligence and its applications?"
    
-2. **Select AI Model**: Choose the model that best fits your needs:
-   - **GPT-4o**: Latest and most capable (default)
-   - **GPT-4**: Reliable and powerful
-   - **GPT-4-turbo**: Fast and efficient
+2. **Choose Tools**: Select your search preferences:
+   - **🌐 Web Search**: For current, real-time information
+   - **📚 Document Search**: For your private document collection
+   - **Both**: Comprehensive search across all sources
 
-3. **Generate Tasks**: Click the "Generate Tasks" button to create your breakdown
+3. **Get Responses**: The assistant will:
+   - Use selected tools to find relevant information
+   - Provide well-cited, comprehensive answers
+   - Maintain conversation context for follow-up questions
 
-4. **Review Results**: Your tasks will appear with:
-   - Numbered, hierarchical structure
-   - Clear dependencies and timelines
-   - Actionable, concrete steps
+4. **Continue Conversation**: Ask follow-up questions to dive deeper:
+   - "Can you elaborate on that?"
+   - "What are the latest developments?"
+   - "How does this relate to my previous question?"
 
-5. **View History**: Access previous task generations in the expandable history section
+5. **Manage Chat**: Use sidebar controls to clear history or view app information
 
 ## 🏗️ Project Structure
 
 ```
 lo-agent-bootcamp/
-├── app.py              # Main Streamlit application
+├── app.py              # Main Streamlit application (Week 2 - Research Assistant)
 ├── couple.png          # Header image
 ├── .env                # Environment variables (create this)
+├── requirements.txt    # Project dependencies
+├── RELEASE_NOTES.md    # Version history and bootcamp progress
+├── TEST_SCRIPT.md      # Comprehensive testing guide
 ├── env/                # Virtual environment
-├── .venv/              # Alternative virtual environment
-├── archive/            # Legacy files and tests
-│   ├── agent.py        # Alternative agent implementation
-│   ├── main.py         # Console-based version
-│   ├── *_test.py       # Various test files
-│   └── *_backup.py     # Backup versions
+├── archive/            # Week 1 files and development history
+│   ├── agent.py        # Week 1 - Alternative agent implementation
+│   ├── app_backup.py   # Week 1 - Task generator backup
+│   ├── *_test.py       # Development test files
+│   └── virtualenv-readme.md # Setup documentation
 └── README.md           # This file
 ```
 
 ## 🔧 Technical Details
 
 ### Core Technologies
-- **Frontend**: Streamlit with custom CSS styling
-- **AI Model**: OpenAI GPT models (4o, 4, 4-turbo)
-- **Environment Management**: python-dotenv
+- **Frontend**: Streamlit with Claude.ai-inspired custom CSS
+- **AI Model**: OpenAI GPT-4o with function calling
+- **Search Tools**: Document search (vector store) + Web search
+- **Environment Management**: python-dotenv for secure API keys
 - **Language**: Python 3.12+
 
 ### Key Components
-- **Task Generation**: Specialized system prompts for optimal task breakdown
-- **UI Layout**: Responsive centered design with 1:7:1 column ratio
-- **Session Management**: Streamlit session state for persistence
-- **Error Handling**: Comprehensive error management and user feedback
+- **Conversational AI**: Chat interface with context memory
+- **Function Calling**: OpenAI tools integration for search capabilities
+- **UI Layout**: Modern gradient design with fixed bottom input
+- **Session Management**: Streamlit session state for chat persistence
+- **Error Handling**: Graceful degradation and user-friendly messages
 
 ### API Configuration
-- **Model Selection**: Dynamic model switching
+- **Model**: GPT-4o (latest and most capable)
 - **Token Limits**: 1500 max completion tokens
-- **Temperature**: 0.7 for balanced creativity (GPT-4 models)
-- **Response Format**: Structured markdown with numbered tasks
+- **Temperature**: 0.7 for balanced accuracy and creativity
+- **Tools**: Dynamic function calling based on user selection
+- **Context**: Full conversation history maintained
 
 ## 🎨 UI Features
 
@@ -196,15 +232,24 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Powered by [OpenAI](https://openai.com/) for intelligent task generation
 - Inspired by the need for better project planning and task management
 
-## 📞 Support
+## � Version History
+
+See [RELEASE_NOTES.md](RELEASE_NOTES.md) for detailed version history, bootcamp progress, and feature evolution.
+
+**Current Version**: 2.1.0 - "The 'Yes Dear' Assistant"  
+**Bootcamp Status**: Week 2 Complete ✅
+
+## �📞 Support
 
 If you encounter any issues or have questions:
 1. Check the troubleshooting section above
-2. Review the archived test files for examples
-3. Open an issue on GitHub
+2. Review the [TEST_SCRIPT.md](TEST_SCRIPT.md) for comprehensive testing scenarios
+3. Check [RELEASE_NOTES.md](RELEASE_NOTES.md) for version-specific information
+4. Review archived files for development examples
+5. Open an issue on GitHub
 
 ---
 
-**Happy Task Breaking! 🎉**
+**Happy Researching! 🔍💕**
 
-*Transform your ambitious goals into achievable action items with the power of AI.*
+*Your intelligent companion for tackling research tasks and honeydew lists with the power of conversational AI.*

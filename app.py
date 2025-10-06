@@ -16,7 +16,7 @@ VECTOR_STORE_ID = "vs_placeholder_id_12345"
 
 # Streamlit UI
 st.set_page_config(
-    page_title="Context-Aware Research Assistant",
+    page_title="The 'Yes Dear' Assistant",
     page_icon="🔍",
     layout="centered"
 )
@@ -106,8 +106,8 @@ st.markdown('<div class="main-content">', unsafe_allow_html=True)
 # Header section
 st.markdown("""
 <div class="main-header">
-    <h1>🔍 Context-Aware Research Assistant</h1>
-    <p>Your intelligent research companion with document knowledge and web search capabilities</p>
+    <h1>🔍 The 'Yes Dear' Assistant</h1>
+    <p>Your intelligent research companion with document knowledge and web search capabilities<br>that will help you with your honeydew list</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -163,7 +163,7 @@ try:
 
     # Fixed chat input at bottom (Claude-style)
     st.markdown('<div class="chat-input-container">', unsafe_allow_html=True)
-    if prompt := st.chat_input("Ask me anything about your documents or search the web...", key="chat_input"):
+    if prompt := st.chat_input("What can I help you research from your honeydew list today?", key="chat_input"):
             # Add user message to chat history
             st.session_state.messages.append({"role": "user", "content": prompt})
             
@@ -333,10 +333,10 @@ CONSTRAINTS: Never fabricate information - if you don't know, say so. Acknowledg
                 st.rerun()
         
         st.markdown("### ℹ️ About")
-        st.info("This is a Context-Aware Research Assistant built for Week 2 of the AI Agent Bootcamp.")
+        st.info("This is The 'Yes Dear' Assistant built for Week 2 of the AI Agent Bootcamp - your helpful companion for tackling that honeydew list!")
         
         # Show couple image in sidebar
-        st.image("couple.png", caption="AI Research Assistant")
+        st.image("couple.png", caption="The 'Yes Dear' Assistant")
         
         st.markdown("---")
         st.markdown("**Built with:**")
