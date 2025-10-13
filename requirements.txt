@@ -3,6 +3,11 @@ streamlit==1.50.0
 openai==1.109.1
 python-dotenv==1.1.1
 
+# Microsoft Agent Framework (Week 3 Multi-Agent System)
+# NOTE: --pre flag is REQUIRED during preview period
+agent-framework-azure-ai  # Install with: pip install agent-framework-azure-ai --pre
+azure-identity>=1.15.0
+
 # Real API integrations (optional - for production use)
 requests>=2.31.0
 google-api-python-client>=2.100.0
