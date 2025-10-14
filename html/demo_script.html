@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Script</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .nav-button {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            color: #667eea;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        h1 { font-size: 2.5em; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
+        h2 { font-size: 2em; border-bottom: 2px solid #667eea; padding-bottom: 8px; }
+        h3 { font-size: 1.5em; }
+        
+        p {
+            margin: 1em 0;
+        }
+        
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+        
+        li {
+            margin: 0.5em 0;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1em 0;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+            color: #e2e8f0;
+        }
+        
+        blockquote {
+            border-left: 4px solid #667eea;
+            padding: 10px 20px;
+            margin: 1em 0;
+            background: #f8f9fa;
+            font-style: italic;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        tr:hover {
+            background: #f7fafc;
+        }
+        
+        a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1em 0;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin: 5px;
+        }
+        
+        .badge-success {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .badge-info {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .badge-warning {
+            background: #ed8936;
+            color: white;
+        }
+        
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .back-to-home {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .back-to-home:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .back-to-home {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Demo Script</h1>
+            <div style="margin-top: 20px;">
+                <a href="../demodocs.html" class="nav-button">🏠 Home</a>
+                <a href="readme.html" class="nav-button">📖 Main README</a>
+            </div>
+        </div>
+        
+        <div class="content">
+            <h1>Week 3 Multi-Agent System Demo Script</h1>
+
+<h2>"Yes Dear" Assistant Demonstration</h2>
+
+<hr />
+
+<h2>🎬 Demo Overview</h2>
+
+<p><strong>Duration:</strong> 10-15 minutes<br />
+<strong>Audience:</strong> AI Agent Bootcamp - Week 3 Presentation<br />
+<strong>Objective:</strong> Demonstrate multi-agent system meeting all assignment requirements</p>
+
+<hr />
+
+<h2>📋 Pre-Demo Checklist</h2>
+
+<ul>
+<li>[ ] Application running: <code>streamlit run app_multi_agent.py</code></li>
+<li>[ ] Browser open to <code>http://localhost:8501</code></li>
+<li>[ ] Demo mode enabled (Real APIs unchecked)</li>
+<li>[ ] Chat history cleared</li>
+<li>[ ] Terminal visible (for debugging if needed)</li>
+<li>[ ] Architecture diagram ready (optional)</li>
+</ul>
+
+<hr />
+
+<h2>🎯 Demo Script</h2>
+
+<h3>Part 1: Introduction (2 minutes)</h3>
+
+<p><strong>Opening Statement:</strong></p>
+
+<blockquote>
+  <p>"Today I'm demonstrating my Week 3 multi-agent system called 'Yes Dear' - an assistant that helps automate my honeydew list using 4 specialized AI agents built with Microsoft Agent Framework."</p>
+</blockquote>
+
+<p><strong>Show System Architecture:</strong><br />
+1. Point to sidebar showing the 4 agents<br />
+2. Explain the flow:<br />
+   <pre><code>Coordinator → Research → Document → Summarizer<br />
+   </code></pre></p>
+
+<p><strong>Highlight Requirements Met:</strong><br />
+- ✅ Design Pattern: Sequential (with parallel capabilities)<br />
+- ✅ 4 Specialized Agents (Coordinator, Research, Document, Summarizer)<br />
+- ✅ Shared Memory: Active and visible<br />
+- ✅ Error Handling: Built-in fallbacks</p>
+
+<hr />
+
+<h3>Part 2: Basic Functionality Demo (3 minutes)</h3>
+
+<p><strong>Demo Query 1: Simple Research Request</strong></p>
+
+<p><strong>Say:</strong> "Let me show you a basic query. I'll ask the system to research electric vehicles."</p>
+
+<p><strong>Type in chat:</strong></p>
+
+<pre><code>Search for information about electric vehicles and their environmental impact
+</code></pre>
+
+<p><strong>Point out while processing:</strong><br />
+1. Click "Agent Workflow" expander<br />
+2. Show real-time status updates<br />
+3. Point out each agent executing:<br />
+   - ✅ Coordinator analyzing request<br />
+   - ✅ Research agent searching web<br />
+   - ✅ Document agent searching knowledge base<br />
+   - ✅ Summarizer compiling results</p>
+
+<p><strong>When complete:</strong><br />
+- Show the synthesized response<br />
+- Point out markdown formatting<br />
+- Note source citations (if present)</p>
+
+<hr />
+
+<h3>Part 3: Shared Memory Demo (2 minutes)</h3>
+
+<p><strong>Say:</strong> "Now let me show you the shared memory system that enables agent collaboration."</p>
+
+<p><strong>Actions:</strong><br />
+1. Check "Show Agent Activity" in sidebar<br />
+2. Scroll through agent messages<br />
+3. Point out:<br />
+   - Coordinator's routing decision<br />
+   - Research agent's search confirmation<br />
+   - Document agent's search confirmation<br />
+   - Summarizer's synthesis note</p>
+
+<p><strong>Explain:</strong></p>
+
+<blockquote>
+  <p>"This shared memory allows agents to communicate and share findings. The Coordinator logs its routing decision, search agents store their results, and the Summarizer accesses all findings to create a coherent response."</p>
+</blockquote>
+
+<hr />
+
+<h3>Part 4: Agent Specialization Demo (3 minutes)</h3>
+
+<p><strong>Demo Query 2: Research-Heavy Query</strong></p>
+
+<p><strong>Say:</strong> "Let me demonstrate how agents specialize. This query focuses on web research."</p>
+
+<p><strong>Type:</strong></p>
+
+<pre><code>What are the latest developments in AI agent technology from 2025?
+</code></pre>
+
+<p><strong>Point out:</strong><br />
+- Coordinator routes primarily to Research agent<br />
+- Research agent returns current web information<br />
+- Summarizer synthesizes findings<br />
+- Response includes recent information</p>
+
+<p><strong>Demo Query 3: Document-Focused Query</strong></p>
+
+<p><strong>Say:</strong> "Now a query that would use the document search."</p>
+
+<p><strong>Type:</strong></p>
+
+<pre><code>Find information in my documents about project requirements
+</code></pre>
+
+<p><strong>Point out:</strong><br />
+- Coordinator routes to Document agent<br />
+- System would search Pinecone (or mock data)<br />
+- Different type of results (internal knowledge)</p>
+
+<hr />
+
+<h3>Part 5: Error Handling Demo (2 minutes)</h3>
+
+<p><strong>Say:</strong> "One of our key requirements was robust error handling. Let me demonstrate the fallback system."</p>
+
+<p><strong>Actions:</strong><br />
+1. Toggle "Use Real APIs" checkbox ON<br />
+2. Show red warning in sidebar (if APIs not configured)<br />
+3. Submit a query:<br />
+   <pre><code>Search for quantum computing breakthroughs<br />
+   </code></pre></p>
+
+<p><strong>Point out:</strong><br />
+- System attempts real APIs<br />
+- Automatically falls back to mock data<br />
+- Workflow completes successfully<br />
+- No system crash or failure</p>
+
+<p><strong>Explain:</strong></p>
+
+<blockquote>
+  <p>"Each agent has a 3-tier fallback strategy. If real APIs fail, they use mock data. If that fails, they pass the error gracefully. The workflow continues and users get the best possible response."</p>
+</blockquote>
+
+<p><strong>Toggle "Use Real APIs" back OFF</strong></p>
+
+<hr />
+
+<h3>Part 6: Code Walkthrough (3 minutes)</h3>
+
+<p><strong>Say:</strong> "Let me briefly show you the code structure."</p>
+
+<p><strong>Open:</strong> <code>week3/app_multi_agent.py</code></p>
+
+<p><strong>Highlight Key Sections:</strong></p>
+
+<ol>
+<li><p><strong>Shared Memory Class (Lines 44-91):</strong></p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SharedMemory</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_results</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">document_results</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent_messages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre>
+</div>
+
+<ul>
+<li>"This is our shared memory implementation"</li>
+</ul></li>
+<li><p><strong>Agent Executors (Lines 175-424):</strong></p>
+
+<ul>
+<li>Show CoordinatorExecutor</li>
+<li>"Each agent is an Executor subclass"</li>
+<li>Point out <code>@handler</code> decorator</li>
+<li>Show error handling try-catch blocks</li>
+</ul></li>
+<li><p><strong>Workflow Builder (Lines 427-452):</strong></p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="n">workflow</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">WorkflowBuilder</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">set_start_executor</span><span class="p">(</span><span class="n">coordinator</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">coordinator</span><span class="p">,</span> <span class="n">research</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">research</span><span class="p">,</span> <span class="n">document</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">document</span><span class="p">,</span> <span class="n">summarizer</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">build</span><span class="p">()</span>
+<span class="p">)</span>
+</code></pre>
+</div>
+
+<ul>
+<li>"This defines our sequential pattern"</li>
+<li>"Could be modified for parallel execution"</li>
+</ul></li>
+</ol>
+
+<hr />
+
+<h3>Part 7: Documentation Review (2 minutes)</h3>
+
+<p><strong>Say:</strong> "I've created comprehensive documentation for this system."</p>
+
+<p><strong>Open:</strong> <code>week3/WEEK3_ARCHITECTURE.md</code></p>
+
+<p><strong>Scroll through sections:</strong><br />
+1. Requirements checklist (all checked)<br />
+2. Architecture diagram<br />
+3. Agent specifications<br />
+4. Shared memory system<br />
+5. Error handling strategies<br />
+6. Code organization</p>
+
+<p><strong>Highlight:</strong><br />
+- Complete requirements traceability<br />
+- Detailed agent specifications<br />
+- Error handling documentation<br />
+- Future enhancement notes</p>
+
+<hr />
+
+<h3>Part 8: Q&amp;A Topics (Be Prepared)</h3>
+
+<p><strong>Likely Questions:</strong></p>
+
+<p><strong>Q: Why sequential instead of parallel?</strong></p>
+
+<blockquote>
+  <p>A: Sequential provides better control and debugging. The architecture supports parallel - I can show how to modify the WorkflowBuilder to run Research and Document agents simultaneously.</p>
+</blockquote>
+
+<p><strong>Q: How does shared memory persist across agents?</strong></p>
+
+<blockquote>
+  <p>A: The SharedMemory instance is global during workflow execution. Each agent updates it via <code>shared_memory.add_*()</code> methods. In production, this could be Redis or a database.</p>
+</blockquote>
+
+<p><strong>Q: What happens if the Summarizer fails?</strong></p>
+
+<blockquote>
+  <p>A: It has a 3-tier fallback: (1) GPT-4o synthesis, (2) formatted raw results, (3) error message. Users always get some response.</p>
+</blockquote>
+
+<p><strong>Q: Can you add more agents?</strong></p>
+
+<blockquote>
+  <p>A: Yes! I've documented potential additions in the architecture doc - Email Agent, Calendar Agent, and Action Agent. The framework makes this straightforward.</p>
+</blockquote>
+
+<p><strong>Q: How would you deploy this?</strong></p>
+
+<blockquote>
+  <p>A: Agent Framework supports distributed execution. Each agent could be a separate microservice. Shared memory would move to Redis. WorkflowBuilder configuration stays the same.</p>
+</blockquote>
+
+<hr />
+
+<h2>🎯 Key Talking Points</h2>
+
+<h3>Strengths to Emphasize</h3>
+
+<ol>
+<li><p><strong>Complete Requirements Coverage</strong></p>
+
+<ul>
+<li>All 4 core requirements met</li>
+<li>Documentation exceeds expectations</li>
+<li>Demonstration is live and interactive</li>
+</ul></li>
+<li><p><strong>Production-Ready Error Handling</strong></p>
+
+<ul>
+<li>Multi-tier fallback strategies</li>
+<li>No single point of failure</li>
+<li>Graceful degradation</li>
+</ul></li>
+<li><p><strong>Extensible Architecture</strong></p>
+
+<ul>
+<li>Easy to add new agents</li>
+<li>Simple to modify patterns</li>
+<li>Framework supports scaling</li>
+</ul></li>
+<li><p><strong>Developer Experience</strong></p>
+
+<ul>
+<li>Clear code organization</li>
+<li>Comprehensive comments</li>
+<li>Easy to test and debug</li>
+</ul></li>
+</ol>
+
+<hr />
+
+<h2>🚨 Common Issues &amp; Fixes</h2>
+
+<h3>Issue: App won't start</h3>
+
+<p><strong>Fix:</strong> Check OPENAI<em>API</em>KEY in .env file</p>
+
+<h3>Issue: Workflow hangs</h3>
+
+<p><strong>Fix:</strong> Refresh browser, check terminal for errors</p>
+
+<h3>Issue: No agent messages showing</h3>
+
+<p><strong>Fix:</strong> Check "Show Agent Activity" in sidebar</p>
+
+<h3>Issue: Mock data not appearing</h3>
+
+<p><strong>Fix:</strong> Ensure "Use Real APIs" is unchecked</p>
+
+<hr />
+
+<h2>🎬 Closing Statement</h2>
+
+<p><strong>End with:</strong></p>
+
+<blockquote>
+  <p>"This multi-agent system demonstrates all Week 3 requirements: 4 specialized agents working together through a sequential pattern, robust shared memory for collaboration, and comprehensive error handling. The Microsoft Agent Framework made it straightforward to implement these patterns, and the result is a production-ready system that's both powerful and maintainable. Thank you!"</p>
+</blockquote>
+
+<hr />
+
+<h2>📊 Backup Slides (If Needed)</h2>
+
+<h3>Slide 1: Architecture Diagram</h3>
+
+<pre><code>┌─────────────┐
+│ Coordinator │
+└──────┬──────┘
+       │
+   ┌───┴───┐
+   ▼       ▼
+┌──────┐ ┌──────┐
+│Research Document│
+└───┬──┘ └──┬───┘
+    │       │
+    └───┬───┘
+        ▼
+  ┌────────────┐
+  │ Summarizer │
+  └────────────┘
+</code></pre>
+
+<h3>Slide 2: Requirements Matrix</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Requirement</th>
+  <th>Implementation</th>
+  <th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Design Pattern</td>
+  <td>Sequential</td>
+  <td>WorkflowBuilder code</td>
+</tr>
+<tr>
+  <td>3+ Agents</td>
+  <td>4 Agents</td>
+  <td>Executor classes</td>
+</tr>
+<tr>
+  <td>Shared Memory</td>
+  <td>SharedMemory class</td>
+  <td>Code + UI log</td>
+</tr>
+<tr>
+  <td>Error Handling</td>
+  <td>3-tier fallbacks</td>
+  <td>Try-catch blocks</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Slide 3: Technology Stack</h3>
+
+<ul>
+<li>Microsoft Agent Framework (Preview)</li>
+<li>OpenAI GPT-4o</li>
+<li>Streamlit</li>
+<li>Python 3.12</li>
+<li>Google Custom Search API (optional)</li>
+<li>Pinecone Vector DB (optional)</li>
+</ul>
+
+<hr />
+
+<h2>🔧 Demo Environment Setup</h2>
+
+<h3>Terminal Commands (Pre-Demo)</h3>
+
+<div class="codehilite">
+<pre><span></span><code><span class="c1"># Navigate to project</span>
+<span class="nb">cd</span><span class="w"> </span>/c/Users/segayle/repos/lo
+
+<span class="c1"># Activate environment (if using)</span>
+<span class="nb">source</span><span class="w"> </span>env/Scripts/activate<span class="w">  </span><span class="c1"># or env\Scripts\activate on Windows</span>
+
+<span class="c1"># Start app</span>
+streamlit<span class="w"> </span>run<span class="w"> </span>week3/app_multi_agent.py
+</code></pre>
+</div>
+
+<h3>Browser Setup</h3>
+
+<ul>
+<li>Open: <code>http://localhost:8501</code></li>
+<li>Zoom: 125% (for visibility in presentation)</li>
+<li>Developer tools: Closed (cleaner view)</li>
+<li>Sidebar: Expanded</li>
+</ul>
+
+<hr />
+
+<h2>📝 Demo Notes Template</h2>
+
+<p><strong>Date:</strong> <strong><em>_</strong><strong></em><em></strong><strong></em><br />
+<em>*Audience:</em>* <em></strong><strong></em><em></strong><strong></em><em></strong><br />
+<strong>Duration:</strong> <strong></em><em></strong><strong></em><em></strong></em>__</p>
+
+<p><strong>Demo Flow:</strong><br />
+- [ ] Introduction completed<br />
+- [ ] Basic demo completed<br />
+- [ ] Shared memory shown<br />
+- [ ] Specialization demonstrated<br />
+- [ ] Error handling shown<br />
+- [ ] Code walkthrough completed<br />
+- [ ] Documentation reviewed<br />
+- [ ] Q&amp;A handled</p>
+
+<p><strong>Issues Encountered:</strong></p>
+
+<hr />
+
+<p><strong>Audience Feedback:</strong></p>
+
+<hr />
+
+<p><strong>Improvements for Next Time:</strong></p>
+
+<hr />
+
+<hr />
+
+<p><strong>Good luck with your demo! 🚀</strong></p>
+
+        </div>
+        
+        <div class="footer">
+            <p>Week 3 Multi-Agent System - AI Agent Bootcamp</p>
+            <p style="margin-top: 10px;">
+                <span class="badge badge-success">✅ Complete</span>
+                <span class="badge badge-info">📚 Documented</span>
+                <span class="badge badge-warning">🎬 Ready to Demo</span>
+            </p>
+        </div>
+    </div>
+    
+    <a href="../demodocs.html" class="back-to-home">🏠 Back to Home</a>
+</body>
+</html>

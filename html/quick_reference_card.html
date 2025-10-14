@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Reference Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .nav-button {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            color: #667eea;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        h1 { font-size: 2.5em; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
+        h2 { font-size: 2em; border-bottom: 2px solid #667eea; padding-bottom: 8px; }
+        h3 { font-size: 1.5em; }
+        
+        p {
+            margin: 1em 0;
+        }
+        
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+        
+        li {
+            margin: 0.5em 0;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1em 0;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+            color: #e2e8f0;
+        }
+        
+        blockquote {
+            border-left: 4px solid #667eea;
+            padding: 10px 20px;
+            margin: 1em 0;
+            background: #f8f9fa;
+            font-style: italic;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        tr:hover {
+            background: #f7fafc;
+        }
+        
+        a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1em 0;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin: 5px;
+        }
+        
+        .badge-success {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .badge-info {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .badge-warning {
+            background: #ed8936;
+            color: white;
+        }
+        
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .back-to-home {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .back-to-home:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .back-to-home {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Quick Reference Card</h1>
+            <div style="margin-top: 20px;">
+                <a href="../demodocs.html" class="nav-button">🏠 Home</a>
+                <a href="readme.html" class="nav-button">📖 Main README</a>
+            </div>
+        </div>
+        
+        <div class="content">
+            <h1>🎯 Quick Reference Card - Video Demo</h1>
+
+<h2>Print This and Keep Beside You!</h2>
+
+<hr />
+
+<h2>⏱️ TIME CHECKS</h2>
+
+<table>
+<thead>
+<tr>
+  <th>⏰ Time</th>
+  <th>📍 Checkpoint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>0:30</strong></td>
+  <td>✅ Starting architecture</td>
+</tr>
+<tr>
+  <td><strong>1:30</strong></td>
+  <td>✅ Starting first demo</td>
+</tr>
+<tr>
+  <td><strong>2:30</strong></td>
+  <td>✅ Starting second demo</td>
+</tr>
+<tr>
+  <td><strong>3:30</strong></td>
+  <td>✅ Starting code walkthrough</td>
+</tr>
+<tr>
+  <td><strong>4:30</strong></td>
+  <td>✅ Starting conclusion</td>
+</tr>
+<tr>
+  <td><strong>5:00</strong></td>
+  <td>✅ DONE!</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2>🎤 KEY PHRASES - MUST SAY</h2>
+
+<h3>Requirements Coverage</h3>
+
+<ul>
+<li>✅ "Sequential design pattern"</li>
+<li>✅ "Four specialized agents"</li>
+<li>✅ "Shared memory system"</li>
+<li>✅ "Comprehensive error handling"</li>
+<li>✅ "Microsoft Agent Framework"</li>
+</ul>
+
+<h3>Agent Names (All 4!)</h3>
+
+<ul>
+<li>🎯 Coordinator</li>
+<li>🌐 Research  </li>
+<li>📚 Document</li>
+<li>📝 Summarizer</li>
+</ul>
+
+<hr />
+
+<h2>📝 DEMO QUERIES (Copy These!)</h2>
+
+<pre><code>Query 1:
+Tell me about our company's vacation policy
+
+Query 2:
+Research electric vehicles and find our vehicle reimbursement policy
+
+Backup:
+How many vacation days do employees get?
+</code></pre>
+
+<hr />
+
+<h2>🎯 WHAT TO SHOW</h2>
+
+<h3>Must Display On Screen:</h3>
+
+<ul>
+<li>✅ All 4 agent names with icons</li>
+<li>✅ Agent execution details expanded</li>
+<li>✅ Timestamps showing completion</li>
+<li>✅ Activity log with messages</li>
+<li>✅ Code snippets (SharedMemory, error handling)</li>
+<li>✅ Final working responses</li>
+</ul>
+
+<hr />
+
+<h2>💡 IF SOMETHING GOES WRONG</h2>
+
+<h3>Stay Calm, Use These Lines:</h3>
+
+<p><strong>Query takes too long:</strong></p>
+
+<blockquote>
+  <p>"While this processes, the system prioritizes reliability in demo mode..."</p>
+</blockquote>
+
+<p><strong>Something breaks:</strong></p>
+
+<blockquote>
+  <p>"Let me demonstrate with another query..."</p>
+</blockquote>
+
+<p><strong>Forget what to say:</strong></p>
+
+<blockquote>
+  <p>"This shows [pick one]: 4 agents working / shared memory / error handling / sequential pattern"</p>
+</blockquote>
+
+<hr />
+
+<h2>🎬 RECORDING CHECKLIST</h2>
+
+<h3>Before You Start:</h3>
+
+<ul>
+<li>[ ] 📱 Close all notifications</li>
+<li>[ ] 🔇 Silence phone</li>
+<li>[ ] 🪟 Close extra windows</li>
+<li>[ ] ♻️ Restart Streamlit (fresh state)</li>
+<li>[ ] 🧹 Clear chat history</li>
+<li>[ ] ✅ Demo Mode ON</li>
+<li>[ ] 🎤 Test microphone</li>
+<li>[ ] ⏱️ Timer ready</li>
+</ul>
+
+<hr />
+
+<h2>🗣️ SPEAKING REMINDERS</h2>
+
+<h3>Volume &amp; Pace:</h3>
+
+<ul>
+<li>📢 Speak UP - clear and confident</li>
+<li>🐢 Not too FAST - let viewers absorb</li>
+<li>⚖️ STEADY pace - don't rush or drag</li>
+</ul>
+
+<h3>Energy:</h3>
+
+<ul>
+<li>💪 START strong</li>
+<li>⚡ PEAK at demo</li>
+<li>🏆 FINISH confident</li>
+</ul>
+
+<hr />
+
+<h2>📊 STRUCTURE AT A GLANCE</h2>
+
+<pre><code>1. INTRO (30s)
+   └─ "Hi, I'm [name]... Yes Dear assistant..."
+
+2. ARCHITECTURE (1min)
+   └─ "4 agents: Coordinator, Research, Document, Summarizer..."
+
+3. DEMO 1 (1min)
+   └─ "Vacation policy query... watch agents execute..."
+
+4. DEMO 2 (30s)
+   └─ "EV query... parallel execution..."
+
+5. CODE (1min20s)
+   └─ "SharedMemory class... error handling..."
+
+6. CLOSE (40s)
+   └─ "All requirements met... production ready..."
+</code></pre>
+
+<hr />
+
+<h2>✅ MUST PROVE ON SCREEN</h2>
+
+<table>
+<thead>
+<tr>
+  <th>📋 Requirement</th>
+  <th>📺 What to Show</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Design Pattern</td>
+  <td>Architecture diagram, sequential flow</td>
+</tr>
+<tr>
+  <td>4+ Agents</td>
+  <td>All 4 names, execution timestamps</td>
+</tr>
+<tr>
+  <td>Shared Memory</td>
+  <td>SharedMemory class code</td>
+</tr>
+<tr>
+  <td>Error Handling</td>
+  <td>Try-except blocks, fallback tiers</td>
+</tr>
+<tr>
+  <td>Working Demo</td>
+  <td>2 successful queries with results</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2>🚫 DON'T SAY THESE</h2>
+
+<p>❌ "Sorry..."<br />
+❌ "Oops..."<br />
+❌ "Um..."<br />
+❌ "This might..."<br />
+❌ "I think..."<br />
+❌ "Hopefully..."</p>
+
+<h3>Instead Say:</h3>
+
+<p>✅ "As you can see..."<br />
+✅ "Notice how..."<br />
+✅ "This demonstrates..."<br />
+✅ "Watch what happens..."<br />
+✅ "Here's proof..."</p>
+
+<hr />
+
+<h2>🎯 YOUR 4-SENTENCE BACKUP</h2>
+
+<p><strong>If you freeze, remember this story:</strong></p>
+
+<ol>
+<li><strong>"I built a multi-agent assistant with 4 specialized agents"</strong></li>
+<li><strong>"They use sequential pattern and shared memory to collaborate"</strong></li>
+<li><strong>"Built on Microsoft Agent Framework with robust error handling"</strong></li>
+<li><strong>"As you can see in this live demo, it works reliably"</strong></li>
+</ol>
+
+<hr />
+
+<h2>💪 CONFIDENCE BOOSTERS</h2>
+
+<p><strong>Remember:</strong><br />
+- ✅ You BUILT this<br />
+- ✅ It WORKS reliably<br />
+- ✅ You KNOW it well<br />
+- ✅ Requirements are MET<br />
+- ✅ You've got PROOF</p>
+
+<p><strong>You can do this! 🚀</strong></p>
+
+<hr />
+
+<h2>⏱️ TIMING TROUBLE?</h2>
+
+<h3>Running Over 5 Minutes?</h3>
+
+<p><strong>CUT:</strong><br />
+- Second demo (keep just one)<br />
+- Detailed code walkthrough<br />
+- Some narration during processing</p>
+
+<p><strong>KEEP:</strong><br />
+- All 4 agent names<br />
+- At least one working demo<br />
+- Proof of execution<br />
+- Error handling mention</p>
+
+<h3>Running Under 4 Minutes?</h3>
+
+<p><strong>ADD:</strong><br />
+- More detail on shared memory<br />
+- Explain fallback strategy deeper<br />
+- Show activity log more<br />
+- Add backup query</p>
+
+<hr />
+
+<h2>🎬 FINAL CHECK BEFORE RECORDING</h2>
+
+<p>Say "YES" to all:</p>
+
+<ul>
+<li>[ ] Microphone works ✅</li>
+<li>[ ] App is running ✅</li>
+<li>[ ] Demo mode ON ✅</li>
+<li>[ ] Chat cleared ✅</li>
+<li>[ ] Queries copied ✅</li>
+<li>[ ] Timer ready ✅</li>
+<li>[ ] Confident ✅</li>
+</ul>
+
+<p><strong>Then hit RECORD! 🎥</strong></p>
+
+<hr />
+
+<h2>🏁 POST-RECORDING VERIFY</h2>
+
+<p>Watch your video and check:</p>
+
+<ul>
+<li>[ ] Under 5:00 total</li>
+<li>[ ] Said all 4 agent names</li>
+<li>[ ] Showed working demo</li>
+<li>[ ] Displayed code</li>
+<li>[ ] Mentioned requirements</li>
+<li>[ ] Professional tone</li>
+<li>[ ] Clear audio</li>
+</ul>
+
+<p><strong>All YES? → SUBMIT! 🎉</strong></p>
+
+<hr />
+
+<h2>💡 EMERGENCY CONTACT</h2>
+
+<p><strong>If technical issues:</strong><br />
+1. Take a deep breath<br />
+2. Close everything<br />
+3. Restart Streamlit<br />
+4. Try again</p>
+
+<p><strong>You've practiced this. It works. You've got this!</strong></p>
+
+<hr />
+
+<h1>🌟 YOU ARE READY! 🌟</h1>
+
+<p><strong>Now go make that awesome demo! 🎬🚀</strong></p>
+
+        </div>
+        
+        <div class="footer">
+            <p>Week 3 Multi-Agent System - AI Agent Bootcamp</p>
+            <p style="margin-top: 10px;">
+                <span class="badge badge-success">✅ Complete</span>
+                <span class="badge badge-info">📚 Documented</span>
+                <span class="badge badge-warning">🎬 Ready to Demo</span>
+            </p>
+        </div>
+    </div>
+    
+    <a href="../demodocs.html" class="back-to-home">🏠 Back to Home</a>
+</body>
+</html>

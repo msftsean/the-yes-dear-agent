@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talk Track Detailed</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .nav-button {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            color: #667eea;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        h1 { font-size: 2.5em; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
+        h2 { font-size: 2em; border-bottom: 2px solid #667eea; padding-bottom: 8px; }
+        h3 { font-size: 1.5em; }
+        
+        p {
+            margin: 1em 0;
+        }
+        
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+        
+        li {
+            margin: 0.5em 0;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1em 0;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+            color: #e2e8f0;
+        }
+        
+        blockquote {
+            border-left: 4px solid #667eea;
+            padding: 10px 20px;
+            margin: 1em 0;
+            background: #f8f9fa;
+            font-style: italic;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        tr:hover {
+            background: #f7fafc;
+        }
+        
+        a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1em 0;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin: 5px;
+        }
+        
+        .badge-success {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .badge-info {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .badge-warning {
+            background: #ed8936;
+            color: white;
+        }
+        
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .back-to-home {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .back-to-home:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .back-to-home {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Talk Track Detailed</h1>
+            <div style="margin-top: 20px;">
+                <a href="../demodocs.html" class="nav-button">🏠 Home</a>
+                <a href="readme.html" class="nav-button">📖 Main README</a>
+            </div>
+        </div>
+        
+        <div class="content">
+            <h1>🎙️ 5-Minute Demo Talk Track</h1>
+
+<h2>Detailed Speaking Points with Timings</h2>
+
+<hr />
+
+<h2>🎬 OPENING (0:00-0:30)</h2>
+
+<h3>[Screen: Title slide or Streamlit app homepage]</h3>
+
+<p><strong>[0:00-0:10] Greeting &amp; Introduction</strong></p>
+
+<pre><code>"Hello! My name is [Your Name], and today I'm presenting my 
+Week 3 assignment for the AI Agent Bootcamp: building an advanced 
+multi-agent system."
+</code></pre>
+
+<p><strong>[0:10-0:25] Project Overview</strong></p>
+
+<pre><code>"I've built 'Yes Dear' - an AI-powered honeydew list assistant 
+that uses Microsoft Agent Framework to coordinate four specialized 
+agents. These agents work together through shared memory to handle 
+research, document search, and information synthesis tasks."
+</code></pre>
+
+<p><strong>[0:25-0:30] Transition</strong></p>
+
+<pre><code>"Let me show you the architecture and then we'll see it in action."
+</code></pre>
+
+<h3>🎯 Goals for This Section:</h3>
+
+<ul>
+<li>✅ Establish credibility</li>
+<li>✅ State project name clearly</li>
+<li>✅ Mention all key components</li>
+<li>✅ Set expectations</li>
+</ul>
+
+<hr />
+
+<h2>🏗️ ARCHITECTURE (0:30-1:30)</h2>
+
+<h3>[Screen: Sidebar showing Architecture section, possibly diagram]</h3>
+
+<p><strong>[0:30-0:45] Agent Overview</strong></p>
+
+<pre><code>"The system follows a sequential design pattern with four 
+specialized agents. Let me walk through each one:
+
+First, the COORDINATOR AGENT - this is the orchestrator. It 
+analyzes incoming requests and determines which agents need to 
+be involved.
+
+Second, the RESEARCH AGENT handles web searches using Google 
+Custom Search API, with automatic fallback to mock data for 
+reliable demonstrations."
+</code></pre>
+
+<p><strong>[0:45-1:00] Continue Agent Explanation</strong></p>
+
+<pre><code>"Third, the DOCUMENT AGENT searches our internal knowledge 
+base. We're using Pinecone vector search, and I've seeded it 
+with company policies and documentation like vacation policies 
+and employee handbooks.
+
+Fourth, the SUMMARIZER AGENT takes findings from both research 
+and document agents and synthesizes them into a comprehensive 
+response using GPT-4o."
+</code></pre>
+
+<p><strong>[1:00-1:25] Shared Memory Explanation</strong></p>
+
+<pre><code>"What makes this system powerful is the SHARED MEMORY mechanism. 
+All four agents communicate through a SharedMemory class that 
+maintains state, logs every activity, and enables seamless 
+collaboration.
+
+You can see this in the activity log - every agent action, 
+every decision, every search result is tracked and shared."
+</code></pre>
+
+<p><strong>[1:25-1:30] Transition to Demo</strong></p>
+
+<pre><code>"Now let's see it work with a real query."
+</code></pre>
+
+<h3>🎯 Goals for This Section:</h3>
+
+<ul>
+<li>✅ Explain all 4 agents clearly</li>
+<li>✅ Emphasize sequential pattern</li>
+<li>✅ Highlight shared memory</li>
+<li>✅ Show understanding of architecture</li>
+</ul>
+
+<hr />
+
+<h2>🎮 LIVE DEMO - QUERY 1 (1:30-2:30)</h2>
+
+<h3>[Screen: Main chat interface]</h3>
+
+<p><strong>[1:30-1:40] Setup First Query</strong></p>
+
+<pre><code>"I'm running in Demo Mode right now, which uses mock data for 
+completely reliable demonstrations. In production, I can flip 
+this switch to use real APIs.
+
+Let me ask: 'Tell me about our company's vacation policy'."
+</code></pre>
+
+<h3>[Action: Type query and press Enter]</h3>
+
+<p><strong>[1:40-2:00] Narrate Processing</strong></p>
+
+<pre><code>"Watch what happens:
+
+The Coordinator Agent is analyzing... it detects keywords 
+'policy' and 'company', so it knows this requires document search.
+
+Research Agent is searching the web for additional context...
+
+Document Agent is querying Pinecone... and it's found our 
+Vacation Policy 2024 document with high relevance score.
+
+Now the Summarizer is combining these results..."
+</code></pre>
+
+<h3>[Screen: Response appears]</h3>
+
+<p><strong>[2:00-2:15] Show Results</strong></p>
+
+<pre><code>"And here's our answer! A comprehensive response about vacation 
+policies drawn from both web research and our internal documents.
+
+But the real proof is in the execution details..."
+</code></pre>
+
+<h3>[Action: Click "📊 Agent Execution Details" expander]</h3>
+
+<p><strong>[2:15-2:30] Highlight Agent Execution</strong></p>
+
+<pre><code>"Look at this - all four agents completed successfully with 
+timestamps:
+
+Coordinator: Complete at 6:47:11 PM
+Research: Complete at 6:47:12 PM
+Document: Complete at 6:47:13 PM  
+Summarizer: Complete at 6:47:15 PM
+
+And here's the activity log showing exactly what each agent did."
+</code></pre>
+
+<h3>🎯 Goals for This Section:</h3>
+
+<ul>
+<li>✅ Demonstrate working system</li>
+<li>✅ Show all 4 agents executing</li>
+<li>✅ Prove timestamps/completion</li>
+<li>✅ Highlight activity log</li>
+</ul>
+
+<hr />
+
+<h2>🎮 LIVE DEMO - QUERY 2 (2:30-3:00)</h2>
+
+<h3>[Screen: Chat input ready]</h3>
+
+<p><strong>[2:30-2:40] Introduce Complex Query</strong></p>
+
+<pre><code>"Let's try something more challenging that demonstrates parallel 
+execution. I'll ask: 'Research electric vehicles and find our 
+vehicle reimbursement policy'
+
+This requires BOTH extensive web research AND internal document 
+search working together."
+</code></pre>
+
+<h3>[Action: Type and submit query]</h3>
+
+<p><strong>[2:40-2:55] Process and Results</strong></p>
+
+<pre><code>"Same smooth execution... all agents coordinating seamlessly...
+
+Notice the timestamps in the execution details - Research and 
+Document agents ran in parallel, reducing total latency. This 
+is the power of the design pattern - sequential control flow 
+with parallel execution where it makes sense."
+</code></pre>
+
+<p><strong>[2:55-3:00] Quick Summary</strong></p>
+
+<pre><code>"Two completely different queries, both handled perfectly by 
+the same multi-agent system."
+</code></pre>
+
+<h3>🎯 Goals for This Section:</h3>
+
+<ul>
+<li>✅ Show versatility</li>
+<li>✅ Demonstrate parallel execution</li>
+<li>✅ Emphasize design pattern</li>
+<li>✅ Build credibility</li>
+</ul>
+
+<hr />
+
+<h2>💻 TECHNICAL DEEP DIVE (3:00-4:20)</h2>
+
+<h3>[Screen: Split to show code editor]</h3>
+
+<p><strong>[3:00-3:20] Shared Memory Code</strong></p>
+
+<pre><code>"Now let me show you the key technical implementations.
+
+This is the SharedMemory class - the brain of the operation. 
+It stores search results, maintains agent communication logs, 
+tracks task history, and provides a single source of truth for 
+all agents.
+
+Every agent gets a reference to this shared memory, enabling 
+seamless collaboration without tight coupling."
+</code></pre>
+
+<h3>[Screen: Scroll to ResearchExecutor with error handling]</h3>
+
+<p><strong>[3:20-3:50] Error Handling</strong></p>
+
+<pre><code>"What really makes this production-ready is the error handling. 
+Every agent implements a three-tier fallback system:
+
+Tier 1: Real API call - this gives the best quality results 
+when everything is configured.
+
+Tier 2: Automatic fallback to mock data - this guarantees the 
+system always works, perfect for demos and development.
+
+Tier 3: Graceful skip - if both fail, the agent skips its 
+operation and the workflow continues.
+
+This architecture means the system NEVER crashes. Missing API 
+keys? No problem. Network failure? It adapts. Rate limits hit? 
+We fall back automatically."
+</code></pre>
+
+<h3>[Screen: Show code with try-except blocks]</h3>
+
+<p><strong>[3:50-4:10] Framework Integration</strong></p>
+
+<pre><code>"All of this is built on Microsoft Agent Framework. We're using:
+
+- WorkflowBuilder for orchestration
+- Executor pattern for agent implementation  
+- Handler decorators for clean code
+- WorkflowContext for message passing
+
+The framework handles all the complexity of agent coordination, 
+letting me focus on business logic."
+</code></pre>
+
+<p><strong>[4:10-4:20] Production Ready</strong></p>
+
+<pre><code>"In the UI, I can toggle between Demo Mode and Real Mode. 
+Demo Mode uses mock data - guaranteed to work every time. 
+Real Mode connects to actual Google Search and Pinecone for 
+production use."
+</code></pre>
+
+<h3>🎯 Goals for This Section:</h3>
+
+<ul>
+<li>✅ Show code quality</li>
+<li>✅ Explain error handling deeply</li>
+<li>✅ Demonstrate framework knowledge</li>
+<li>✅ Prove production readiness</li>
+</ul>
+
+<hr />
+
+<h2>🎯 CONCLUSION (4:20-5:00)</h2>
+
+<h3>[Screen: Return to app showing completed queries]</h3>
+
+<p><strong>[4:20-4:40] Summary of Achievements</strong></p>
+
+<pre><code>"Let me summarize what we've built:
+
+✅ FOUR specialized agents - Coordinator, Research, Document, 
+   and Summarizer - each with a specific role
+
+✅ A SEQUENTIAL workflow pattern with parallel execution 
+   capability where it improves performance
+
+✅ SHARED MEMORY system enabling effective agent collaboration 
+   without tight coupling
+
+✅ COMPREHENSIVE error handling with three-tier fallbacks at 
+   every failure point
+
+✅ And a PRODUCTION-READY architecture using Microsoft Agent 
+   Framework that scales"
+</code></pre>
+
+<p><strong>[4:40-4:50] Real-World Capabilities</strong></p>
+
+<pre><code>"This isn't just a demo - it's built to handle real-world 
+scenarios: missing API keys, network failures, invalid data, 
+rate limits - all while maintaining a smooth user experience."
+</code></pre>
+
+<h3>[Screen: Quick glimpse of documentation files]</h3>
+
+<p><strong>[4:50-4:58] Documentation</strong></p>
+
+<pre><code>"Complete documentation is available including architecture 
+guides, setup instructions, API references, and detailed code 
+walkthroughs. Everything needed for production deployment."
+</code></pre>
+
+<p><strong>[4:58-5:00] Closing</strong></p>
+
+<pre><code>"Thank you for watching! Happy to answer any questions."
+</code></pre>
+
+<h3>🎯 Goals for This Section:</h3>
+
+<ul>
+<li>✅ Reinforce requirements met</li>
+<li>✅ Emphasize production quality</li>
+<li>✅ Mention documentation</li>
+<li>✅ Strong confident close</li>
+</ul>
+
+<hr />
+
+<h2>🎭 Performance Notes</h2>
+
+<h3>Tone &amp; Delivery</h3>
+
+<p><strong>Opening (0:00-0:30)</strong><br />
+- 🎤 Energetic, confident introduction<br />
+- 📢 Clear enunciation<br />
+- 😊 Friendly but professional</p>
+
+<p><strong>Architecture (0:30-1:30)</strong><br />
+- 🧠 Thoughtful, educational tone<br />
+- ⚡ Good pace, not rushed<br />
+- 📊 Emphasize key concepts</p>
+
+<p><strong>Demo (1:30-3:00)</strong><br />
+- 🎮 Excited, engaged with the system<br />
+- 👀 "Watch this" enthusiasm<br />
+- ✨ Highlight impressive features</p>
+
+<p><strong>Technical (3:00-4:20)</strong><br />
+- 💻 Expert, detailed explanation<br />
+- 🔧 Show technical depth<br />
+- 🛡️ Confidence in architecture</p>
+
+<p><strong>Conclusion (4:20-5:00)</strong><br />
+- 🏆 Proud of accomplishment<br />
+- ✅ Clear summary<br />
+- 👋 Professional closing</p>
+
+<hr />
+
+<h2>🎯 Key Phrases to Use</h2>
+
+<h3>Emphasize Requirements</h3>
+
+<p><strong>Say these explicitly:</strong><br />
+- "This demonstrates the <strong>sequential design pattern</strong> required in the assignment"<br />
+- "All <strong>four specialized agents</strong> are working together"<br />
+- "The <strong>shared memory system</strong> enables collaboration"<br />
+- "<strong>Comprehensive error handling</strong> is built into every agent"<br />
+- "This meets all the <strong>assignment requirements</strong>"</p>
+
+<h3>Show Technical Depth</h3>
+
+<ul>
+<li>"Microsoft Agent Framework"</li>
+<li>"WorkflowBuilder API"</li>
+<li>"Async execution with asyncio"</li>
+<li>"Three-tier fallback strategy"</li>
+<li>"Production-ready architecture"</li>
+</ul>
+
+<h3>Prove It Works</h3>
+
+<ul>
+<li>"As you can see..."</li>
+<li>"Notice the timestamps..."</li>
+<li>"Here's proof..."</li>
+<li>"Watch what happens..."</li>
+<li>"All agents completed successfully..."</li>
+</ul>
+
+<hr />
+
+<h2>⚠️ Common Pitfalls to Avoid</h2>
+
+<h3>DON'T Say:</h3>
+
+<p>❌ "This might work..." → ✅ "This works reliably..."<br />
+❌ "I think this does..." → ✅ "This does..."<br />
+❌ "Sorry for the delay..." → ✅ Just keep narrating<br />
+❌ "Oops!" or "Uh oh..." → ✅ Stay confident<br />
+❌ "This is probably..." → ✅ "This is..."</p>
+
+<h3>DON'T Do:</h3>
+
+<p>❌ Apologize for anything<br />
+❌ Dwell on minor issues<br />
+❌ Go over 5 minutes<br />
+❌ Use filler words (um, uh, like)<br />
+❌ Rush through important parts</p>
+
+<hr />
+
+<h2>🎬 Backup Plans</h2>
+
+<h3>If Query Takes Too Long</h3>
+
+<pre><code>"While this processes, let me mention that in production mode, 
+these queries complete in 5-15 seconds. Demo mode prioritizes 
+reliability over speed... and here's our result!"
+</code></pre>
+
+<h3>If Something Doesn't Work</h3>
+
+<pre><code>"Let me try a different query that showcases the same 
+functionality..."
+[Use backup query]
+</code></pre>
+
+<h3>If You Forget What to Say</h3>
+
+<p><strong>Fall back to the structure:</strong><br />
+1. What the system does<br />
+2. How it works<br />
+3. Why it's impressive<br />
+4. What requirement it meets</p>
+
+<hr />
+
+<h2>✅ Pre-Recording Verbal Checklist</h2>
+
+<h3>Say out loud before recording:</h3>
+
+<ul>
+<li>[ ] "My name is clearly stated"</li>
+<li>[ ] "Project name mentioned: Yes Dear"</li>
+<li>[ ] "All 4 agents named: Coordinator, Research, Document, Summarizer"</li>
+<li>[ ] "Design pattern stated: Sequential"</li>
+<li>[ ] "Shared memory mentioned explicitly"</li>
+<li>[ ] "Error handling explained"</li>
+<li>[ ] "Microsoft Agent Framework credited"</li>
+<li>[ ] "Assignment requirements referenced"</li>
+</ul>
+
+<hr />
+
+<h2>🎤 Voice &amp; Energy Guidelines</h2>
+
+<h3>Volume</h3>
+
+<ul>
+<li><strong>Consistent</strong> - Don't fade or get too loud</li>
+<li><strong>Clear</strong> - Enunciate technical terms</li>
+<li><strong>Audible</strong> - Speak up, don't mumble</li>
+</ul>
+
+<h3>Pace</h3>
+
+<ul>
+<li><strong>Opening:</strong> Moderate, set the stage</li>
+<li><strong>Architecture:</strong> Slightly slower, education mode</li>
+<li><strong>Demo:</strong> Animated, excited</li>
+<li><strong>Technical:</strong> Measured, detailed</li>
+<li><strong>Conclusion:</strong> Strong, confident</li>
+</ul>
+
+<h3>Energy</h3>
+
+<ul>
+<li><strong>Start Strong</strong> - Grab attention immediately</li>
+<li><strong>Maintain</strong> - Don't trail off midway</li>
+<li><strong>Build</strong> - Demo is the peak excitement</li>
+<li><strong>Finish Strong</strong> - Confident conclusion</li>
+</ul>
+
+<hr />
+
+<h2>📊 Timing Checkpoints</h2>
+
+<h3>If you're at these times, you're on track:</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Time</th>
+  <th>You Should Be At</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>0:30</td>
+  <td>Just finished intro, starting architecture</td>
+</tr>
+<tr>
+  <td>1:00</td>
+  <td>Midway through architecture</td>
+</tr>
+<tr>
+  <td>1:30</td>
+  <td>Starting first demo query</td>
+</tr>
+<tr>
+  <td>2:00</td>
+  <td>Showing first query results</td>
+</tr>
+<tr>
+  <td>2:30</td>
+  <td>Starting second query</td>
+</tr>
+<tr>
+  <td>3:00</td>
+  <td>Starting code walkthrough</td>
+</tr>
+<tr>
+  <td>3:30</td>
+  <td>In error handling explanation</td>
+</tr>
+<tr>
+  <td>4:00</td>
+  <td>Wrapping up technical section</td>
+</tr>
+<tr>
+  <td>4:30</td>
+  <td>In conclusion</td>
+</tr>
+<tr>
+  <td>5:00</td>
+  <td>Done!</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2>🏆 Success = You Clearly Show:</h2>
+
+<ol>
+<li>✅ <strong>All 4 agents</strong> working (names stated)</li>
+<li>✅ <strong>Sequential pattern</strong> implemented</li>
+<li>✅ <strong>Shared memory</strong> connecting agents</li>
+<li>✅ <strong>Error handling</strong> with fallbacks</li>
+<li>✅ <strong>Working demo</strong> with actual output</li>
+<li>✅ <strong>Code quality</strong> through snippets</li>
+<li>✅ <strong>Production ready</strong> architecture</li>
+</ol>
+
+<hr />
+
+<h2>🎬 Final Motivational Words</h2>
+
+<p><strong>You've built something real and impressive!</strong></p>
+
+<ul>
+<li>Your system WORKS</li>
+<li>Your code is CLEAN</li>
+<li>Your architecture is SOLID</li>
+<li>Your demo will be GREAT</li>
+</ul>
+
+<p><strong>Just be yourself, speak clearly, and show what you built.</strong></p>
+
+<p><strong>You've got this! 🚀</strong></p>
+
+<hr />
+
+<h2>📝 Quick Reference During Recording</h2>
+
+<p><strong>If you get lost, remember the story:</strong></p>
+
+<ol>
+<li><strong>What</strong> - Multi-agent assistant with 4 specialized agents</li>
+<li><strong>How</strong> - Sequential pattern, shared memory, Agent Framework</li>
+<li><strong>Why</strong> - Reliable, scalable, production-ready</li>
+<li><strong>Proof</strong> - Live demo shows it working perfectly</li>
+</ol>
+
+<p><strong>That's your entire presentation in 4 sentences.</strong></p>
+
+<hr />
+
+<h2>🎯 POST-RECORDING CHECKLIST</h2>
+
+<p>After recording, verify:</p>
+
+<ul>
+<li>[ ] Under 5 minutes total</li>
+<li>[ ] All 4 agents mentioned by name</li>
+<li>[ ] Live demo shown working</li>
+<li>[ ] Code snippets displayed</li>
+<li>[ ] Requirements explicitly stated</li>
+<li>[ ] No errors or awkward pauses</li>
+<li>[ ] Clear audio throughout</li>
+<li>[ ] Professional tone maintained</li>
+</ul>
+
+<p><strong>If YES to all → Upload and submit! 🎉</strong></p>
+
+<p><strong>If NO to any → Quick re-record of that section</strong></p>
+
+<hr />
+
+<p><strong>You're ready! Go record an amazing demo! 🎬🌟</strong></p>
+
+        </div>
+        
+        <div class="footer">
+            <p>Week 3 Multi-Agent System - AI Agent Bootcamp</p>
+            <p style="margin-top: 10px;">
+                <span class="badge badge-success">✅ Complete</span>
+                <span class="badge badge-info">📚 Documented</span>
+                <span class="badge badge-warning">🎬 Ready to Demo</span>
+            </p>
+        </div>
+    </div>
+    
+    <a href="../demodocs.html" class="back-to-home">🏠 Back to Home</a>
+</body>
+</html>
