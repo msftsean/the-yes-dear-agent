@@ -1,10 +1,8 @@
 import os
-import openai
 import asyncio
 import pandas as pd
 import smtplib
 import sqlite3
-import json
 import streamlit as st
 import re
 from email.mime.text import MIMEText

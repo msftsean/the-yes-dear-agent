@@ -2,17 +2,20 @@
 Quick test to verify real-time agent status updates during query processing
 """
 import asyncio
+import pytest
 from playwright.async_api import async_playwright
 import time
 
+
+@pytest.mark.asyncio
 async def test_realtime_updates():
     """Test that agent status updates in real-time, not just at completion"""
     
     async with async_playwright() as p:
         print("\n🚀 Starting real-time update test...")
         
-        # Launch browser
-        browser = await p.chromium.launch(headless=False)
+        # Launch browser (headless in CI/devcontainer)
+        browser = await p.chromium.launch(headless=True)
         page = await browser.new_page()
         
         print("📱 Opening Streamlit app at http://localhost:8507")
@@ -27,7 +30,7 @@ async def test_realtime_updates():
                 await api_checkbox.click()
                 await asyncio.sleep(1)
                 print("   ✓ Real APIs enabled")
-        except:
+        except Exception:
             print("   ⚠️ Could not find API checkbox (might be in demo mode)")
         
         # Submit a complex query that should take time
@@ -74,16 +77,16 @@ async def test_realtime_updates():
                 
                 last_status = current_status
                 
-            except Exception as e:
+            except Exception:
                 if i == 0:
                     print(f"[{elapsed:.1f}s] ⏳ Waiting for status to appear...")
             
             await asyncio.sleep(0.5)
         
         print("\n" + "=" * 70)
-        print(f"\n📊 TEST RESULTS:")
+        print("\n📊 TEST RESULTS:")
         print(f"   Total updates detected: {update_count}")
-        print(f"\n   Final Status:")
+        print("\n   Final Status:")
         for agent, status in last_status.items():
             print(f"      {agent}: {status}")
         
@@ -96,7 +99,7 @@ async def test_realtime_updates():
             print("      Agents may be completing too fast or updates not streaming")
         
         print("\n📸 Taking final screenshot...")
-        await page.screenshot(path="c:/Users/segayle/repos/lo/week3/realtime_test.png", full_page=True)
+        await page.screenshot(path="week3/realtime_test.png", full_page=True)
         print("   Saved to: week3/realtime_test.png")
         
         # Keep browser open for manual inspection

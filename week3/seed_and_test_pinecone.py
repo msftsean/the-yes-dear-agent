@@ -339,14 +339,13 @@ def check_requirements():
         return False
     print_success("Pinecone API key found")
     
-    # Check for Pinecone package
-    try:
-        from pinecone import Pinecone
-        print_success("Pinecone package installed")
-    except ImportError:
+    # Check for Pinecone package using importlib to avoid importing unused symbols
+    import importlib.util
+    if importlib.util.find_spec('pinecone') is None:
         print_error("Pinecone package not installed")
         print_info("Run: pip install pinecone-client")
         return False
+    print_success("Pinecone package appears available")
     
     return True
 

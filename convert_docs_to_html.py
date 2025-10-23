@@ -1,5 +1,4 @@
 import markdown2
-import os
 from pathlib import Path
 
 # HTML template
@@ -302,6 +301,6 @@ if __name__ == "__main__":
     # Convert main README
     readme_filename, readme_title = convert_md_to_html(readme_path, output_dir)
     
-    print(f"\n✅ All conversions complete!")
+    print("\n✅ All conversions complete!")
     print(f"📁 Output directory: {output_dir}")
     print(f"📄 Total files created: {len(demo_files) + 1}")

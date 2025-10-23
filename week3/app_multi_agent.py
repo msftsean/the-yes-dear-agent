@@ -20,13 +20,12 @@ Assignment Requirements Met:
 
 import streamlit as st
 import os
-import json
 import asyncio
-import time
 import pytz
 from datetime import datetime
 from typing import Optional, Dict, Any, List
 from dotenv import load_dotenv
+from week4_features import init_session_state_defaults
 
 # Microsoft Agent Framework imports
 from agent_framework import (
@@ -38,7 +37,6 @@ from agent_framework import (
     WorkflowOutputEvent,
     WorkflowStatusEvent,
     ExecutorFailedEvent,
-    WorkflowRunState,
     handler,
 )
 from agent_framework.azure import AzureOpenAIChatClient
@@ -87,7 +85,6 @@ class SharedMemory:
     
     def update_agent_state(self, agent: str, state: str):
         """Update agent state with timestamp in 12-hour Eastern time format"""
-        import pytz
         eastern = pytz.timezone('US/Eastern')
         eastern_time = datetime.now(eastern)
         self.agent_states[agent] = state
@@ -145,7 +142,7 @@ def get_shared_memory():
     return st.session_state.shared_memory
 
 # Get shared memory instance
-shared_memory = get_shared_memory()
+_ = get_shared_memory()
 
 # ============================================================================
 # SEARCH UTILITY FUNCTIONS
@@ -156,16 +153,16 @@ def mock_web_search(query: str) -> str:
     return f"🌐 **Mock Web Search Results for '{query}':**\n\n" + \
            f"• Latest information on {query} from reputable sources\n" + \
            f"• Recent updates as of {datetime.now().strftime('%B %Y')}\n" + \
-           f"• Expert analysis and professional insights\n\n" + \
-           f"*Mock data for demonstration*"
+           "• Expert analysis and professional insights\n\n" + \
+           "*Mock data for demonstration*"
 
 def mock_document_search(query: str) -> str:
     """Mock document search for demo purposes"""
     return f"📚 **Mock Document Search Results for '{query}':**\n\n" + \
-           f"• Relevant information from your private collection\n" + \
-           f"• Additional context from knowledge base\n" + \
-           f"• Related findings from archived materials\n\n" + \
-           f"*Mock data for demonstration*"
+           "• Relevant information from your private collection\n" + \
+           "• Additional context from knowledge base\n" + \
+           "• Related findings from archived materials\n\n" + \
+           "*Mock data for demonstration*"
 
 def real_web_search(query: str) -> str:
     """Real Google Custom Search API integration"""
@@ -224,6 +221,24 @@ def real_document_search(query: str) -> str:
                 input=query,
                 model="text-embedding-ada-002"
             )
+            # Track embedding cost if cost_monitor available
+            try:
+                if 'cost_monitor' in st.session_state:
+                    usage = getattr(embedding_response, 'usage', None)
+                    if usage is None and isinstance(embedding_response, dict):
+                        usage = embedding_response.get('usage')
+                    # embeddings responses sometimes don't include prompt/completion tokens; try total_tokens
+                    input_tokens = 0
+                    output_tokens = 0
+                    if usage:
+                        input_tokens = int(getattr(usage, 'prompt_tokens', usage.get('prompt_tokens', 0) if isinstance(usage, dict) else 0) or 0)
+                        output_tokens = int(getattr(usage, 'completion_tokens', usage.get('completion_tokens', 0) if isinstance(usage, dict) else 0) or 0)
+                    else:
+                        # fallback: estimate tokens from input length (naive)
+                        input_tokens = max(1, len(query.split()))
+                    st.session_state.cost_monitor.track_request('document', {'input_tokens': input_tokens, 'output_tokens': output_tokens})
+            except Exception:
+                pass
             query_embedding = embedding_response.data[0].embedding
             
             # Search
@@ -290,7 +305,7 @@ Always start by understanding what the user needs, then decide on the best appro
         """
         try:
             # Get fresh shared_memory and reset everything for new query
-            shared_memory = get_shared_memory()
+            _ = get_shared_memory()
             
             # Clear old agent messages to start fresh
             shared_memory.agent_messages = []
@@ -365,7 +380,7 @@ class ResearchExecutor(Executor):
         Error handling: Automatic fallback to mock data
         """
         try:
-            shared_memory = get_shared_memory()
+            _ = get_shared_memory()
             
             # ALWAYS execute research for comprehensive results
             shared_memory.update_agent_state('research', 'Searching')
@@ -428,7 +443,7 @@ class DocumentExecutor(Executor):
         Error handling: Automatic fallback to mock data
         """
         try:
-            shared_memory = get_shared_memory()
+            _ = get_shared_memory()
             if not routing.get("needs_documents"):
                 # Skip if not needed
                 shared_memory.update_agent_state('document', 'Skipped')
@@ -496,7 +511,7 @@ class SummarizerExecutor(Executor):
         Error handling: Falls back to raw result concatenation
         """
         try:
-            shared_memory = get_shared_memory()
+            _ = get_shared_memory()
             shared_memory.update_agent_state('summarizer', 'Compiling')
             shared_memory.add_agent_message("Summarizer", "Synthesizing findings")
             
@@ -524,34 +539,67 @@ class SummarizerExecutor(Executor):
             # Try to use OpenAI for intelligent synthesis
             try:
                 if self.openai_client:
-                    response = self.openai_client.chat.completions.create(
-                        model="gpt-4o",
-                        messages=[
-                            {
-                                "role": "system",
-                                "content": """You are a helpful assistant synthesizing research findings.
+                    # Build a callable for the API call so error handler can retry/fallback
+                    def _call_openai():
+                        return self.openai_client.chat.completions.create(
+                            model="gpt-4o",
+                            messages=[
+                                {
+                                    "role": "system",
+                                    "content": """You are a helpful assistant synthesizing research findings.
                                 
 Create a clear, comprehensive response based on the search results provided.
 - Cite sources when relevant
 - Organize information logically
 - Be concise but thorough
 - Use markdown formatting"""
-                            },
-                            {
-                                "role": "user",
-                                "content": f"User Question: {user_query}\n\nSearch Results:\n{full_context}\n\nPlease provide a well-organized answer."
-                            }
-                        ],
-                        temperature=0.7,
-                        max_tokens=1500
-                    )
-                    
+                                },
+                                {
+                                    "role": "user",
+                                    "content": f"User Question: {user_query}\n\nSearch Results:\n{full_context}\n\nPlease provide a well-organized answer."
+                                }
+                            ],
+                            temperature=0.7,
+                            max_tokens=1500
+                        )
+
+                    try:
+                        if 'error_handler' in st.session_state:
+                            response = await st.session_state.error_handler.execute_with_retry(_call_openai, endpoint='openai_api')
+                        else:
+                            response = _call_openai()
+                            if hasattr(response, '__await__'):
+                                response = await response
+                    except Exception:
+                        # bubble up to outer except for fallback handling
+                        raise
+
                     final_response = response.choices[0].message.content
                     shared_memory.add_agent_message("Summarizer", "Synthesis complete")
-                    
+
+                    # COST TRACKING: extract usage and record
+                    try:
+                        if 'cost_monitor' in st.session_state:
+                            usage = getattr(response, 'usage', None)
+                            if usage is None and isinstance(response, dict):
+                                usage = response.get('usage')
+                            if usage:
+                                # support attribute-style or dict-style
+                                input_tokens = getattr(usage, 'prompt_tokens', None)
+                                output_tokens = getattr(usage, 'completion_tokens', None)
+                                if input_tokens is None and isinstance(usage, dict):
+                                    input_tokens = usage.get('prompt_tokens', 0)
+                                if output_tokens is None and isinstance(usage, dict):
+                                    output_tokens = usage.get('completion_tokens', 0)
+                                input_tokens = int(input_tokens or 0)
+                                output_tokens = int(output_tokens or 0)
+                                st.session_state.cost_monitor.track_request('summarizer', {'input_tokens': input_tokens, 'output_tokens': output_tokens})
+                    except Exception:
+                        # Non-fatal if cost tracking fails
+                        pass
+
                     # Add visible delay before marking complete
                     await asyncio.sleep(1.0)
-                    
                     shared_memory.update_agent_state('summarizer', 'Complete')
                     await ctx.yield_output(final_response)
                 else:
@@ -614,8 +662,177 @@ def create_multi_agent_workflow(use_real_apis: bool = False) -> Any:
 
 def render_sidebar():
     """Render sidebar with configuration and system info"""
-    # Get fresh shared_memory reference
-    shared_memory = get_shared_memory()
+    # Get fresh shared_memory reference (ignored value)
+    _ = get_shared_memory()
+
+
+def render_production_dashboard():
+    """Render a richer production dashboard in the sidebar."""
+    with st.sidebar.expander("🎛️ Production Dashboard", expanded=False):
+        # Environment
+        environment = os.getenv('ENVIRONMENT', 'development').upper()
+        env_colors = {'PRODUCTION': '🔴', 'STAGING': '🟠', 'DEVELOPMENT': '🟢'}
+        st.markdown(f"### {env_colors.get(environment, '⚪')} {environment}")
+
+        # Cost monitoring
+        if 'cost_monitor' in st.session_state:
+            metrics = st.session_state.cost_monitor.get_metrics()
+            budget = metrics['budget_status']
+            if budget['alert_level'] == 'critical':
+                st.error(budget['alert_message'])
+            elif budget['alert_level'] == 'warning':
+                st.warning(budget['alert_message'])
+            else:
+                st.success(budget['alert_message'])
+
+            # Progress bar
+            try:
+                pct = min(int(budget['percentage']), 100)
+            except Exception:
+                pct = 0
+            st.progress(pct)
+
+            col1, col2 = st.columns(2)
+            with col1:
+                st.metric("Session Spend", f"${metrics['total_cost']:.4f}", delta=f"${budget['remaining']:.2f} left")
+            with col2:
+                st.metric("Avg/Request", f"${metrics['avg_cost_per_request']:.4f}")
+
+            st.metric("Total Tokens", f"{metrics['total_input_tokens'] + metrics['total_output_tokens']:,}", delta=f"In: {metrics['total_input_tokens']:,} | Out: {metrics['total_output_tokens']:,}")
+
+            with st.expander("💸 Cost by Agent"):
+                for agent, cost in metrics['cost_by_agent'].items():
+                    percentage = (cost / metrics['total_cost'] * 100) if metrics['total_cost'] > 0 else 0
+                    st.write(f"**{agent.capitalize()}:** ${cost:.4f} ({percentage:.1f}%)")
+
+        # Performance metrics
+        with st.expander("⚡ Performance"):
+            perf = st.session_state.get('performance_metrics', {})
+            if perf:
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.metric("Avg Time", f"{perf.get('avg_response_time', 0):.2f}s")
+                    st.metric("Success Rate", f"{perf.get('success_rate', 100):.1f}%")
+                with col2:
+                    st.metric("P95 Time", f"{perf.get('p95_response_time', 0):.2f}s")
+                    st.metric("Error Rate", f"{perf.get('error_rate', 0):.1f}%")
+            else:
+                st.info("No performance metrics available yet")
+
+        # System Health
+        with st.expander("🏥 System Health"):
+            st.markdown("**API Status:**")
+            api_status = {
+                'OpenAI': '✅' if OPENAI_API_KEY else '❌',
+                'Google': '✅' if (GOOGLE_API_KEY and GOOGLE_CSE_ID) else '⭕',
+                'Pinecone': '✅' if PINECONE_API_KEY else '⭕'
+            }
+            for api, status in api_status.items():
+                st.write(f"{status} {api}")
+
+            # Circuit Breaker Status
+            if 'error_handler' in st.session_state:
+                eh = st.session_state.error_handler
+                if eh.circuit_states:
+                    st.markdown("**Circuit Breakers:**")
+                    for endpoint, state in eh.circuit_states.items():
+                        icon = '🟢' if state == 'closed' else '🔴' if state == 'open' else '🟡'
+                        st.write(f"{icon} {endpoint}: {state}")
+                else:
+                    st.success("All circuits closed")
+
+        # Security Monitoring
+        with st.expander("🔒 Security Monitoring"):
+            if 'security_manager' in st.session_state:
+                sm = st.session_state.security_manager
+                total_requests = sum(sm.request_timestamps.values() if isinstance(sm.request_timestamps, dict) else [len(v) for v in sm.request_timestamps.values()])
+                st.metric("Total Requests", total_requests)
+                st.metric("Rate Limit", f"{sm.max_requests_per_minute}/min")
+
+                if sm.request_timestamps:
+                    st.write("**Recent Activity:**")
+                    for user_id, timestamps in list(sm.request_timestamps.items())[:5]:
+                        user_display = user_id[:8] + "..." if len(user_id) > 8 else user_id
+                        st.write(f"• {user_display}: {len(timestamps)} requests")
+            else:
+                st.info("Security manager not initialized")
+
+        # Cost Optimizer Cache Controls
+        with st.expander("💾 Cache & Optimization"):
+            if 'cost_optimizer' in st.session_state:
+                cache_enabled = st.checkbox(
+                    "Enable Response Caching",
+                    value=st.session_state.cost_optimizer.use_caching,
+                    help="Cache responses for identical queries to save cost"
+                )
+                st.session_state.cost_optimizer.use_caching = cache_enabled
+
+                model_cascade = st.checkbox(
+                    "Enable Model Cascading",
+                    value=st.session_state.cost_optimizer.use_model_cascade,
+                    help="Use cheaper models for simple queries"
+                )
+                st.session_state.cost_optimizer.use_model_cascade = model_cascade
+
+                cache_size = len(st.session_state.cost_optimizer.response_cache)
+                st.metric("Cached Responses", cache_size)
+
+                if st.button("🗑️ Clear Cache"):
+                    st.session_state.cost_optimizer.clear_cache()
+                    st.success("Cache cleared!")
+                    st.rerun()
+            else:
+                st.info("Cost optimizer not initialized")
+
+        # Evaluation
+        if 'eval_framework' in st.session_state:
+            if st.button("▶️ Run Eval Suite"):
+                with st.spinner("Running evaluation suite..."):
+                    summary = st.session_state.eval_framework.run_all_tests(lambda q: {'text': f'(eval stub) {q}'})
+                    st.write(summary)
+                    # persist
+                    try:
+                        import json
+                        with open('eval_results.json', 'w') as f:
+                            json.dump(summary, f, indent=2)
+                    except Exception:
+                        pass
+            # download if exists
+            try:
+                import os
+                import json
+                if os.path.exists('eval_results.json'):
+                    with open('eval_results.json', 'r') as f:
+                        payload = f.read()
+                    st.download_button('⬇️ Download Eval Results', payload, file_name='eval_results.json', mime='application/json')
+            except Exception:
+                pass
+
+        # Checklist
+        if 'production_checklist' in st.session_state:
+            if st.button("🔍 Run Production Checks"):
+                res = st.session_state.production_checklist.run_all_checks()
+                st.write(res)
+
+        # Moderation Admin
+        with st.expander("🔒 Moderation Admin"):
+            # show in-memory log
+            mod_log = st.session_state.get('moderation_log', []) if 'moderation_log' in st.session_state else []
+            st.write(f"Recent moderation events: {len(mod_log)}")
+            if mod_log:
+                for e in mod_log[-20:][::-1]:
+                    st.caption(f"[{e['timestamp']}] blocked={e['blocked']} {e['text_snippet'][:120]}")
+
+            # allow download of file if exists
+            try:
+                import os
+                if os.path.exists('moderation_log.jsonl'):
+                    with open('moderation_log.jsonl', 'r', encoding='utf-8') as f:
+                        payload = f.read()
+                    st.download_button('⬇️ Download Moderation Log', payload, file_name='moderation_log.jsonl', mime='text/plain')
+            except Exception:
+                pass
+
     
     st.sidebar.title("🤖 Multi-Agent System")
     
@@ -652,7 +869,7 @@ def render_sidebar():
     st.sidebar.markdown("---")
     try:
         st.sidebar.image("../assets/images/couple.png", width="stretch")
-    except:
+    except Exception:
         pass  # Image not found, skip silently
     
     # Architecture Info
@@ -683,6 +900,13 @@ def render_sidebar():
         if 'messages' in st.session_state:
             st.session_state['messages'] = []
         st.rerun()
+    
+    # === Week 4 Production Dashboard (delegated) ===
+    try:
+        render_production_dashboard()
+    except Exception:
+        # Sidebar should never break the app; ignore dashboard errors
+        pass
     
     return use_real_apis
 
@@ -715,6 +939,13 @@ def main():
         st.error("❌ OPENAI_API_KEY not found! Please add it to your .env file.")
         st.stop()
     
+    # Initialize Week 4 session defaults (cost monitor, security, etc.)
+    try:
+        init_session_state_defaults()
+    except Exception:
+        # Non-fatal if initialization fails
+        pass
+
     # Render sidebar and get configuration
     use_real_apis = render_sidebar()
     
@@ -745,9 +976,25 @@ The agents will collaborate to find the best answer!
     
     # Chat input
     if prompt := st.chat_input("What's on your honeydew list today?"):
-        # Get fresh shared memory and ensure it's ready for new query
-        shared_memory = get_shared_memory()
-        
+        # Get fresh shared memory and ensure it's ready for new query (ignored value)
+        _ = get_shared_memory()
+        # SECURITY: validate input before processing
+        try:
+            user_id = st.session_state.get('session_id', 'anonymous')
+            if 'security_manager' in st.session_state:
+                is_valid, error_msg, details = asyncio.run(st.session_state.security_manager.validate_input(prompt, user_id))
+                if not is_valid:
+                    # Show a friendly message and moderation details if available
+                    st.error(error_msg)
+                    if details:
+                        with st.expander('🔒 Moderation Details'):
+                            st.json(details)
+                    st.session_state['messages'].append({"role": "assistant", "content": f"Input blocked: {error_msg}"})
+                    return
+        except Exception:
+            # If validation fails for unexpected reason, proceed but warn
+            st.warning("Input validation unavailable; proceeding with caution.")
+
         # Add user message
         st.session_state['messages'].append({"role": "user", "content": prompt})
         
@@ -828,8 +1075,15 @@ The agents will collaborate to find the best answer!
                     
                     return final_response
                 
-                # Run the workflow
-                result = asyncio.run(run_workflow())
+                # Run the workflow wrapped with production error handling
+                try:
+                    if 'error_handler' in st.session_state:
+                        result = asyncio.run(st.session_state.error_handler.execute_with_retry(run_workflow, endpoint='openai_api'))
+                    else:
+                        result = asyncio.run(run_workflow())
+                except Exception:
+                    # Bubble up to outer except
+                    raise
                 
                 # Show execution proof
                 shared_mem = get_shared_memory()

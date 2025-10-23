@@ -4,7 +4,6 @@ This lets you see the real behavior step by step
 """
 import asyncio
 from playwright.async_api import async_playwright
-import time
 
 async def manual_test():
     """Open browser and let user test manually"""
