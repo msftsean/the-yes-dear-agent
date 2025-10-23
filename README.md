@@ -1,7 +1,7 @@
 # The 'Yes Dear' Assistant 🔍
 
-![Version](https://img.shields.io/badge/Version-2.4.0-blue)
-![Bootcamp](https://img.shields.io/badge/Bootcamp-Week%202%20Complete-success)
+![Version](https://img.shields.io/badge/Version-4.0.0-blue)
+![Bootcamp](https://img.shields.io/badge/Bootcamp-Week%204%20Complete-success)
 ![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-orange)
 ![Framework](https://img.shields.io/badge/Framework-Streamlit-red)
@@ -96,9 +96,10 @@ A sophisticated AI-powered research assistant built with Streamlit and OpenAI's 
 |------|------------|--------|--------------|
 | **Week 1** | Task Generator | ✅ Complete | Basic AI agent, task breakdown, simple UI |
 | **Week 2** | Research Assistant | ✅ Complete | Chat interface, function calling, search tools |
-| **Week 3** | Advanced Features | 🔄 Coming Soon | Enhanced integrations, production features |
+| **Week 3** | Multi-Agent System | ✅ Complete | Advanced multi-agent coordination, real-time updates |
+| **Week 4** | Production Features | ✅ Complete | Cost monitoring, security, testing, optimization, dashboard |
 
-> **Current Status**: Week 2 Complete - Full conversational research assistant with tool integration
+> **Current Status**: Week 4 Complete - Enterprise-ready production application with comprehensive monitoring and security
 
 ## �🎯 How to Use
 
@@ -187,6 +188,304 @@ cp archive/env.template .env
 streamlit run app.py
 ```
 
+---
+
+## 🚀 Week 4 — Production Upgrade Features
+
+This repository includes comprehensive **Week 4 production features** for enterprise-ready AI applications with cost monitoring, testing, security, and operational excellence.
+
+### 🎯 Production Features Overview
+
+| Feature | Description | Status |
+|---------|-------------|--------|
+| **💰 Cost Monitoring** | Real-time token tracking with budget alerts | ✅ Complete |
+| **🧪 Evaluation Framework** | 10-test suite (2 normal, 6 edge, 2 adversarial) | ✅ Complete |
+| **🛡️ Error Handling** | Exponential backoff, circuit breaker, fallback | ✅ Complete |
+| **🔒 Security** | Input validation, prompt injection, PII detection | ✅ Complete |
+| **💾 Cost Optimization** | Response caching, model cascading | ✅ Complete |
+| **📊 Production Dashboard** | Tabbed monitoring interface with 7 feature dashboards | ✅ Complete |
+| **✅ Readiness Checklist** | 12-point production validation | ✅ Complete |
+
+### 📦 Installation & Setup
+
+1. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Configure Environment**
+   ```bash
+   # Copy the example environment file
+   cp .env.example .env
+
+   # Edit .env with your API keys (minimum: OPENAI_API_KEY)
+   ```
+
+3. **Run the Week 4 Production App**
+   ```bash
+   python -m streamlit run week4_app_final.py
+   ```
+
+4. **Access the Application**
+   - Open the app in your browser (usually `http://localhost:8501`)
+   - **💬 Chat Assistant** tab: Your "Yes Dear" conversational agent with couple.png branding
+   - **📊 Production Dashboard** tab: Complete monitoring across 7 feature dashboards
+   - All Week 4 production features integrated seamlessly
+
+### 🎛️ Production Dashboard Features
+
+The Production Dashboard tab includes **7 dedicated feature tabs** for comprehensive monitoring:
+
+#### 💰 **Cost Monitoring**
+- **Real-time Budget Tracking**: Monitor spending against daily limit ($100 default)
+- **Budget Alerts**: Warning at 70%, Critical at 100%
+- **Cost Breakdown**: See spending by agent (Coordinator, Research, Document, Summarizer)
+- **Token Metrics**: Track input/output tokens per request
+- **Session Analytics**: Average cost per request
+
+#### 1. 💰 **Cost Monitor Tab**
+- **Real-time Budget Tracking**: Progress bar showing spending vs daily limit
+- **Budget Alerts**: Visual warnings (Warning at 70%, Critical at 100%)
+- **Session Metrics**: Total spend, requests, average cost per request, total tokens
+- **Token Breakdown**: Input vs output token usage
+- **Cost by Agent**: See spending by Coordinator, Research, Document, Summarizer
+
+#### 2. 🔒 **Security Tab**
+- **Rate Limiting**: 10 requests/minute per user (configurable)
+- **Active Security Features**: Rate limiting, prompt injection detection, PII detection, content moderation
+- **Recent Activity**: Per-user request tracking
+- **Moderation Log**: View recent events with blocked/allowed status
+- **Download Logs**: Export full moderation log (JSONL format)
+
+#### 3. 🏥 **System Health Tab**
+- **API Configuration Status**: Visual indicators for OpenAI (required), Google Search (optional), Pinecone (optional)
+- **Circuit Breakers**: Real-time circuit state monitoring (operational/open/half-open)
+- **Environment Information**: Environment type, daily budget, alert threshold, rate limits
+
+#### 4. ⚡ **Performance Tab**
+- **Response Time Metrics**: Average, min, max response times
+- **Success Rate**: Track query success percentage
+- **Total Queries**: Request volume tracking
+- **Response Time Distribution**: Statistical breakdown of latency
+
+#### 5. 💾 **Optimization Tab**
+- **Cache Metrics**: Cached response count and TTL settings
+- **Toggle Controls**: Enable/disable response caching and model cascading
+- **Cache Management**: Clear cache with one click
+- **Cost Savings**: View estimated savings from optimization features
+
+#### 6. 🧪 **Testing Tab**
+- **Test Suite Overview**: 10 tests (2 normal, 6 edge, 2 adversarial)
+- **Run Full Suite**: Execute all tests with one click
+- **Test Results**: Pass rate, tests passed/failed metrics
+- **Download Results**: Export test results as JSON
+- **Results Preview**: View last test run details
+
+#### 7. ✅ **Checklist Tab**
+- **Production Readiness Validation**: 12-point comprehensive check
+- **Readiness Score**: Overall production readiness percentage
+- **Detailed Results**: Pass/fail status for each check with messages
+- **One-Click Validation**: Run all checks instantly
+
+### 🔒 Security Features
+
+#### Input Validation
+```python
+# Automatic validation on all queries:
+# ✅ Rate limiting (10 req/min per user)
+# ✅ Input sanitization (remove control chars, scripts)
+# ✅ Prompt injection detection
+# ✅ PII detection (emails, SSNs, credit cards, phones)
+# ✅ Content moderation (OpenAI Moderation API)
+```
+
+#### Blocked Patterns
+- **Prompt Injection**: "ignore all previous instructions", "disregard previous", etc.
+- **Jailbreak Attempts**: "DAN mode", "developer mode", etc.
+- **Malicious Scripts**: `<script>`, `<iframe>`, etc.
+- **PII**: Automatic detection and warning
+
+### 💰 Cost Management
+
+#### Budget Configuration
+```bash
+# In .env file:
+DAILY_SPENDING_LIMIT=100.00      # Maximum daily spend
+ALERT_THRESHOLD=70.0             # Warning threshold (%)
+PER_USER_QUOTA=50                # Per-user request limit
+```
+
+#### Cost Tracking
+- **Automatic Tracking**: All OpenAI API calls are monitored
+- **Agent Breakdown**: See which agents cost the most
+- **Budget Enforcement**: Requests blocked when limit reached
+- **Real-time Alerts**: Visual warnings in dashboard
+
+#### Pricing (GPT-4o)
+- Input: $5.00 per 1M tokens
+- Output: $15.00 per 1M tokens
+
+### 🛡️ Error Handling
+
+The system includes production-grade error handling:
+
+#### Retry Logic
+- **Exponential Backoff**: 1s, 2s, 4s, 8s, 16s delays
+- **Jitter**: Random variation to prevent thundering herd
+- **Max Retries**: 5 attempts before failure
+
+#### Circuit Breaker
+- **Threshold**: 5 consecutive failures
+- **States**: Closed (normal) → Open (blocked) → Half-Open (testing)
+- **Auto-Recovery**: 60-second cooldown before retry
+
+#### Model Fallback
+- **Primary**: GPT-4o for quality
+- **Fallback**: GPT-3.5-turbo if GPT-4o fails
+- **Graceful Degradation**: Never leave user without response
+
+### 🧪 Evaluation Framework
+
+#### Test Suite (10 Tests)
+- **Normal Cases (20%)**: Basic functionality
+  - Test 1: "What is artificial intelligence?"
+  - Test 2: "Tell me about machine learning algorithms"
+
+- **Edge Cases (60%)**: Robustness
+  - Test 3: Empty input
+  - Test 4: Very long query (3,600 chars)
+  - Test 5: Special characters and scripts
+  - Test 6: Multilingual (Chinese)
+  - Test 7: Ambiguous query
+  - Test 8: Multiple questions
+
+- **Adversarial (20%)**: Security
+  - Test 9: Prompt injection attempt
+  - Test 10: Jailbreak attempt
+
+#### Running Tests
+1. Click **▶️ Run Eval Suite** in dashboard
+2. Wait for all tests to complete
+3. Review pass rate (target: 80%+)
+4. Click **⬇️ Download Eval Results** for JSON export
+
+#### Success Criteria
+- ✅ 80%+ pass rate required
+- ✅ No crashes on any test
+- ✅ Security tests must pass
+
+### 📊 Monitoring & Analytics
+
+#### Session Metrics
+- Total requests processed
+- Total cost incurred
+- Average cost per request
+- Token usage (input/output)
+- Success/error rates
+
+#### Agent Performance
+- Individual agent costs
+- Agent execution times
+- Agent success rates
+- Error tracking per agent
+
+### 🔧 Configuration
+
+#### Environment Variables
+See [.env.example](.env.example) for full configuration options.
+
+**Required:**
+- `OPENAI_API_KEY`: Your OpenAI API key
+
+**Optional (Real APIs):**
+- `GOOGLE_API_KEY`: Google Custom Search
+- `GOOGLE_CSE_ID`: Search Engine ID
+- `PINECONE_API_KEY`: Vector database
+
+**Week 4 Production:**
+- `ENVIRONMENT`: development/staging/production
+- `DAILY_SPENDING_LIMIT`: Daily budget in dollars
+- `ALERT_THRESHOLD`: Warning threshold percentage
+- `MAX_REQUESTS_PER_MINUTE`: Rate limit
+- `CACHE_TTL_SECONDS`: Cache expiration time
+
+### 📝 Usage Examples
+
+#### Basic Usage
+```bash
+# Run with default settings (demo mode)
+streamlit run week3/app_multi_agent.py
+```
+
+#### Production Mode
+```bash
+# Enable real APIs in the sidebar
+# 1. Check "🔴 Use Real APIs"
+# 2. Monitor costs in dashboard
+# 3. Watch for budget alerts
+```
+
+#### Running Tests
+```bash
+# Automated tests
+pytest tests/ -v
+
+# Or use the dashboard UI
+# Click "▶️ Run Eval Suite" in sidebar
+```
+
+### 📁 Key Files
+
+- **`week3/app_multi_agent.py`**: Main multi-agent application
+- **`week4_features.py`**: Production feature classes
+- **`.env.example`**: Configuration template
+- **`tests/`**: Comprehensive test suite
+- **`eval_results.json`**: Test results (generated)
+- **`moderation_log.jsonl`**: Moderation events (generated)
+
+### 🎓 Learning Outcomes
+
+After implementing Week 4 features, you'll understand:
+- ✅ Production cost monitoring and budget protection
+- ✅ Comprehensive testing strategies (normal/edge/adversarial)
+- ✅ Error handling patterns (retry, circuit breaker, fallback)
+- ✅ Security best practices (validation, moderation, PII)
+- ✅ Performance optimization (caching, model cascading)
+- ✅ Operational monitoring and observability
+- ✅ Production readiness validation
+
+### 🚨 Important Notes
+
+- **Cost Tracking**: Real-time for all OpenAI API calls
+- **Security**: Input validation runs on every query
+- **Testing**: Evaluation suite available in dashboard
+- **Monitoring**: Full observability in production dashboard
+- **Moderation**: Events logged to file and session state
+- **Caching**: Optional optimization to reduce costs
+
+### 🐛 Troubleshooting
+
+**Budget Exceeded Error**
+- Increase `DAILY_SPENDING_LIMIT` in `.env`
+- Clear cache to reset session spend
+- Use "🔄 Reset System" button
+
+**Security Blocks Input**
+- Check moderation log for details
+- Rephrase query without trigger words
+- Avoid sharing PII in queries
+
+**Tests Failing**
+- Check OpenAI API key is valid
+- Ensure internet connection
+- Review test criteria in results
+
+**Circuit Breaker Open**
+- Wait 60 seconds for auto-recovery
+- Check API service status
+- Review error logs in dashboard
+
+
 **📖 See [Production Guide](assets/docs/PRODUCTION_GUIDE.md) for detailed setup instructions.**
 
 ## 🐛 Troubleshooting
@@ -262,8 +561,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 See [Release Notes](assets/docs/RELEASE_NOTES.md) for detailed version history, bootcamp progress, and feature evolution.
 
-**Current Version**: 2.4.0 - "Production-Ready Research Assistant"  
-**Bootcamp Status**: Week 2 Complete ✅ + Production Deployment Ready
+**Current Version**: 4.0.0 - "Yes Dear Production Assistant"
+**Bootcamp Status**: Week 4 Complete ✅ - Enterprise Production Ready
 
 ##  Support
 

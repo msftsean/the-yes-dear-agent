@@ -1,0 +1,11 @@
+{"timestamp": "2025-10-20T15:01:28.897184", "text_snippet": "This text says kill and bomb", "blocked": true, "details": {"reason": "moderation_flag", "tags": ["violence"]}}
+{"timestamp": "2025-10-20T15:08:56.981386", "text_snippet": "This text says kill and bomb", "blocked": true, "details": {"reason": "moderation_flag", "tags": ["violence"]}}
+{"timestamp": "2025-10-20T15:09:11.704370", "text_snippet": "This text says kill and bomb", "blocked": true, "details": {"reason": "moderation_flag", "tags": ["violence"]}}
+{"timestamp": "2025-10-20T15:09:33.493237", "text_snippet": "This text says kill and bomb", "blocked": true, "details": {"reason": "moderation_flag", "tags": ["violence"]}}
+{"timestamp": "2025-10-20T15:12:08.274086", "text_snippet": "This text contains the word kill and bomb.", "blocked": true, "details": {"reason": "moderation_flag", "tags": ["violence"]}}
+{"timestamp": "2025-10-20T15:16:21.567022", "text_snippet": "This text says kill and bomb", "blocked": true, "details": {"reason": "moderation_flag", "tags": ["violence"]}}
+{"timestamp": "2025-10-20T15:19:10.061504", "text_snippet": "This text says kill and bomb", "blocked": true, "details": {"reason": "moderation_flag", "tags": ["violence"]}}
+{"timestamp": "2025-10-20T17:11:53.167223", "text_snippet": "This text says kill and bomb", "blocked": true, "details": {"reason": "moderation_flag", "tags": ["violence"]}}
+{"timestamp": "2025-10-20T17:13:12.822580", "text_snippet": "This text says kill and bomb", "blocked": true, "details": {"reason": "moderation_flag", "tags": ["violence"]}}
+{"timestamp": "2025-10-22T03:58:26.994668", "text_snippet": "what are my vacation options", "blocked": false, "details": {}}
+{"timestamp": "2025-10-22T04:12:38.517719", "text_snippet": "What is artificial intelligence", "blocked": false, "details": {}}
