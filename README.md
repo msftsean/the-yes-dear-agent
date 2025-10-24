@@ -11,6 +11,106 @@ A sophisticated AI-powered research assistant built with Streamlit and OpenAI's 
 
 ![Yes Dear Agent](assets/images/couple.png)
 
+---
+
+## 🎓 For Bootcamp Classmates - One-Click Setup
+
+**Get the full app running in 5 minutes with our automated setup script!**
+
+### 🚀 Quick Start (Recommended)
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/YOUR_USERNAME/lo-agent-bootcamp.git
+cd lo-agent-bootcamp
+
+# 2. Run the automated setup wizard
+python setup.py
+```
+
+That's it! The setup script will:
+- ✅ Check your Python version
+- ✅ Create virtual environment
+- ✅ Install all dependencies
+- ✅ Create configuration file
+- ✅ Guide you through API key setup
+- ✅ Verify everything works
+
+### 🎯 After Setup - Launch the App
+
+**Mac/Linux:**
+```bash
+./run.sh
+```
+
+**Windows:**
+```bash
+run.bat
+```
+
+**Or manually:**
+```bash
+source env/bin/activate  # Mac/Linux
+# env\Scripts\activate   # Windows
+streamlit run app.py
+```
+
+### 🔑 API Keys Required
+
+You'll need at minimum an **OpenAI API key** to use the app.
+
+**Quick Guide:**
+1. Go to https://platform.openai.com/api-keys
+2. Sign up (free $5 credit for new users)
+3. Create new API key
+4. Add payment method (required after free credit)
+5. Copy the key when prompted during setup
+
+**Detailed instructions:** See [API_SETUP_GUIDE.md](API_SETUP_GUIDE.md) for step-by-step guides for all APIs.
+
+**Optional APIs** (app works without these using mock data):
+- **Google Custom Search** - For real web search
+- **Pinecone** - For document search
+
+### 📚 What's Included
+
+This is the **Week 4 Production-Ready** version with all enterprise features:
+- ✅ Cost monitoring and budget alerts ($100 daily limit default)
+- ✅ Security validation (rate limiting, prompt injection detection, PII detection)
+- ✅ Production dashboard with 7 feature tabs
+- ✅ Comprehensive testing framework (10 tests: normal, edge, adversarial)
+- ✅ Error handling with retry logic and circuit breakers
+- ✅ Response caching and model cascading for cost optimization
+- ✅ Sample company documents for testing document search
+
+### 🌱 Seed Sample Data (Optional)
+
+If you configured Pinecone, seed it with sample company policy documents:
+
+```bash
+source env/bin/activate  # Activate environment first
+python scripts/seed_data.py
+```
+
+This creates 8 sample documents covering:
+- HR policies (remote work, vacation, professional development)
+- Security guidelines
+- Product roadmap
+- Customer onboarding
+- Finance policies
+- Engineering practices
+
+---
+
+## 📖 Documentation
+
+- **[API Setup Guide](API_SETUP_GUIDE.md)** - Detailed instructions for getting all API keys
+- **[README](README.md)** - Full feature documentation (you're here!)
+- **[Week 4 Features](#-week-4--production-upgrade-features)** - Production features overview
+- **[Troubleshooting](#-troubleshooting)** - Common issues and solutions
+
+---
+
 ## 🌟 Features
 
 ### 💬 **Conversational AI**
@@ -45,7 +145,7 @@ A sophisticated AI-powered research assistant built with Streamlit and OpenAI's 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/msftsean/lo-agent-bootcamp.git
+   git clone https://github.com/YOUR_USERNAME/lo-agent-bootcamp.git
    cd lo-agent-bootcamp
    ```
 
@@ -553,9 +653,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
+### Special Thanks
+
+**🐙 Lonely Octopus** - For creating an amazing AI agent bootcamp that made this project possible.
+
+**Special recognition to Tina** - For delivering inspiration and guidance to so many aspiring AI developers. Your mentorship and vision have empowered countless learners to build production-ready AI applications.
+
+### Technology
+
 - Built with [Streamlit](https://streamlit.io/) for the beautiful web interface
-- Powered by [OpenAI](https://openai.com/) for intelligent task generation
-- Inspired by the need for better project planning and task management
+- Powered by [OpenAI](https://openai.com/) for intelligent AI capabilities
+- Inspired by the need for better project planning and conversational AI assistants
 
 ## � Version History
 

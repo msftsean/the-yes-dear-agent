@@ -28,6 +28,13 @@ wheels/
 .env
 .env.local
 .env.*.local
+*.env
+
+# Logs and temporary data
+*.log
+*.jsonl
+moderation_log.jsonl
+eval_results.json
 
 # IDEs
 .vscode/
