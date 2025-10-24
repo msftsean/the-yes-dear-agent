@@ -663,6 +663,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Built with [Streamlit](https://streamlit.io/) for the beautiful web interface
 - Powered by [OpenAI](https://openai.com/) for intelligent AI capabilities
+- Enhanced with [Microsoft Agent Framework]([https://](https://learn.microsoft.com/en-us/agent-framework/overview/agent-framework-overview) for multi-agent orchestration
 - Inspired by the need for better project planning and conversational AI assistants
 
 ## � Version History
