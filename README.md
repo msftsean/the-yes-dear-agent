@@ -13,7 +13,7 @@ A sophisticated AI-powered research assistant built with Streamlit and OpenAI's 
 
 ---
 
-## 🎓 For Bootcamp Classmates - One-Click Setup
+## 🎓 One-Click Setup
 
 **Get the full app running in 5 minutes with our automated setup script!**
 
