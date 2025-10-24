@@ -6,6 +6,7 @@
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-orange)
 ![Framework](https://img.shields.io/badge/Framework-Streamlit-red)
 ![APIs](https://img.shields.io/badge/APIs-Hybrid%20System-purple)
+![Agent Framework](https://img.shields.io/badge/Microsoft-Agent%20Framework-0078D4)
 
 [![Author](https://img.shields.io/badge/Author-Sean%20Gayle-blue?style=flat&logo=linkedin)](https://linkedin.com/in/seangayle)
 ![Made in Brooklyn](https://img.shields.io/badge/Made%20with%20❤️%20in-Brooklyn-red?style=flat)
