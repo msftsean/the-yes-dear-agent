@@ -7,7 +7,7 @@
 ![Framework](https://img.shields.io/badge/Framework-Streamlit-red)
 ![APIs](https://img.shields.io/badge/APIs-Hybrid%20System-purple)
 
-A sophisticated AI-powered research assistant built with Streamlit and OpenAI's GPT models. Your intelligent companion for tackling research tasks and honeydew lists with conversational AI and search capabilities.
+A sophisticated AI-powered research assistant built with Streamlit and OpenAI's GPT models. Your intelligent companion for tackling research tasks and honeydew lists with conversational AI and search capabilities.It was created during Tina Huang's Lonely Octopus October 2025 Agent Bootcamp
 
 ![Yes Dear Agent](assets/images/couple.png)
 
@@ -74,7 +74,7 @@ You'll need at minimum an **OpenAI API key** to use the app.
 
 ### 📚 What's Included
 
-This is the **Week 4 Production-Ready** version with all enterprise features:
+This is a *Production-Ready** version with the following enterprise features:
 - ✅ Cost monitoring and budget alerts ($100 daily limit default)
 - ✅ Security validation (rate limiting, prompt injection detection, PII detection)
 - ✅ Production dashboard with 7 feature tabs
