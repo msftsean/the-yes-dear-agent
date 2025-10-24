@@ -1,4 +1,4 @@
-# The 'Yes Dear' Assistant 🔍
+# The 'Yes Dear' Agent 🔍
 
 ![Version](https://img.shields.io/badge/Version-4.0.0-blue)
 ![Bootcamp](https://img.shields.io/badge/Bootcamp-Week%204%20Complete-success)
