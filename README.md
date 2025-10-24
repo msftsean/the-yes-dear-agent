@@ -7,7 +7,11 @@
 ![Framework](https://img.shields.io/badge/Framework-Streamlit-red)
 ![APIs](https://img.shields.io/badge/APIs-Hybrid%20System-purple)
 
-A sophisticated AI-powered research assistant built with Streamlit and OpenAI's GPT models. Your intelligent companion for tackling research tasks and honeydew lists with conversational AI and search capabilities.It was created during Tina Huang's Lonely Octopus October 2025 Agent Bootcamp
+[![Author](https://img.shields.io/badge/Author-Sean%20Gayle-blue?style=flat&logo=linkedin)](https://linkedin.com/in/seangayle)
+![Made in Brooklyn](https://img.shields.io/badge/Made%20with%20❤️%20in-Brooklyn-red?style=flat)
+[![Lonely Octopus](https://img.shields.io/badge/Bootcamp-Lonely%20Octopus%20🐙-purple)](https://github.com/msftsean/lo-agent-bootcamp)
+
+A sophisticated AI-powered research assistant built with Streamlit and OpenAI's GPT models. Your intelligent companion for tackling research tasks and honeydew lists with conversational AI and search capabilities. It was created during Tina Huang's Lonely Octopus October 2025 Agent Bootcamp
 
 ![Yes Dear Agent](assets/images/couple.png)
 
@@ -190,7 +194,7 @@ This creates 8 sample documents covering:
 6. **Open in browser**
    Navigate to `http://localhost:8501` (or the URL shown in terminal)
 
-## � Bootcamp Progress
+## 🎓 Bootcamp Progress
 
 | Week | Assignment | Status | Key Features |
 |------|------------|--------|--------------|
@@ -201,7 +205,7 @@ This creates 8 sample documents covering:
 
 > **Current Status**: Week 4 Complete - Enterprise-ready production application with comprehensive monitoring and security
 
-## �🎯 How to Use
+## 📖🎯 How to Use
 
 1. **Start Chatting**: Type your research question in the input box at the bottom
    - Example: "What is artificial intelligence and its applications?"
@@ -250,7 +254,7 @@ lo-agent-bootcamp/
     └── ...                   # Legacy files
 ```
 
-## � **Documentation**
+## 📚 **Documentation**
 
 For detailed setup, deployment, and technical information:
 
@@ -637,7 +641,7 @@ streamlit run app.py --server.runOnSave true
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## � Documentation
+## 📚 Documentation
 
 ### 📋 Project Documentation
 - **[Release Notes](assets/docs/RELEASE_NOTES.md)** - Complete version history, bootcamp progress, and feature evolution
@@ -647,7 +651,7 @@ streamlit run app.py --server.runOnSave true
 ### 🎪 Demo Materials
 - **[Demo Setup Guide](DEMOS.md)** - Complete guide for presenting your research assistant with scripts and timing
 
-## �📝 License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
@@ -666,14 +670,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Enhanced with [Microsoft Agent Framework]([https://](https://learn.microsoft.com/en-us/agent-framework/overview/agent-framework-overview) for multi-agent orchestration
 - Inspired by the need for better project planning and conversational AI assistants
 
-## � Version History
+## 📋 Version History
 
 See [Release Notes](assets/docs/RELEASE_NOTES.md) for detailed version history, bootcamp progress, and feature evolution.
 
 **Current Version**: 4.0.0 - "Yes Dear Production Assistant"
 **Bootcamp Status**: Week 4 Complete ✅ - Enterprise Production Ready
 
-##  Support
+## 💬 Support
 
 If you encounter any issues or have questions:
 1. Check the troubleshooting section above
